@@ -1,12 +1,584 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>Page Title</title>
-</head>
-<body>
+<html lang="en" ng-app="collaborationApp">
 
-<h1></h1>
-<p>Hello</p>
+<head>
+
+  <style>
+    @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+    @media(min-width:768px) {
+      body {
+        margin-top: 50px;
+      }
+      /*html, body, #wrapper, #page-wrapper {height: 100%; overflow: hidden;}*/
+    }
+
+    #searchBar {
+      padding-left: 100px
+    }
+
+    #wrapper {
+      padding-left: 0;
+    }
+
+    #page-wrapper {
+      width: 100%;
+      padding: 0;
+      background-color: #fff;
+    }
+
+    @media(min-width:768px) {
+      #wrapper {
+        padding-left: 225px;
+      }
+      #page-wrapper {
+        padding: 22px 10px;
+      }
+    }
+    /* Top Navigation */
+
+    .top-nav {
+      padding: 0 15px;
+    }
+
+    .top-nav>li {
+      /*display: inline-block;*/
+      float: left;
+    }
+
+    .top-nav>li>a {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      line-height: 20px;
+      color: #fff;
+    }
+
+    .top-nav>li>a:hover,
+    .top-nav>li>a:focus,
+    .top-nav>.open>a,
+    .top-nav>.open>a:hover,
+    .top-nav>.open>a:focus {
+      color: #fff;
+      background-color: #1a242f;
+    }
+
+    .top-nav>.open>.dropdown-menu {
+      float: left;
+      position: absolute;
+      margin-top: 0;
+      /*border: 1px solid rgba(0,0,0,.15);*/
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      background-color: #fff;
+      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    }
+
+    .top-nav>.open>.dropdown-menu>li>a {
+      white-space: normal;
+    }
+    /* Side Navigation */
+
+    @media(min-width:768px) {
+      .side-nav {
+        position: fixed;
+        top: 50px;
+        left: 0px;
+        width: 225px;
+        margin-left: -225px;
+        border: none;
+        border-radius: 0;
+        border-top: 1px rgba(0, 0, 0, .5) solid;
+        overflow-y: auto;
+        background-color: #222;
+        /*background-color: #5A6B7D;*/
+        bottom: 0;
+        overflow-x: hidden;
+        padding-bottom: 40px;
+      }
+      .side-nav>li>a {
+        width: 225px;
+        border-bottom: 1px rgba(0, 0, 0, .3) solid;
+      }
+      .side-nav li a:hover,
+      .side-nav li a:focus {
+        outline: none;
+        background-color: #1a242f !important;
+      }
+    }
+
+    .side-nav>li>ul {
+      padding: 0;
+      border-bottom: 1px rgba(0, 0, 0, .3) solid;
+    }
+
+    .side-nav>li>ul>li>a {
+      display: block;
+      padding: 10px 15px 10px 38px;
+      text-decoration: none;
+      /*color: #999;*/
+      color: #fff;
+    }
+
+    .side-nav>li>ul>li>a:hover {
+      color: #fff;
+    }
+
+    .navbar .nav>li>a>.label {
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      position: absolute;
+      top: 14px;
+      right: 6px;
+      font-size: 10px;
+      font-weight: normal;
+      min-width: 15px;
+      min-height: 15px;
+      line-height: 1.0em;
+      text-align: center;
+      padding: 2px;
+    }
+
+    .navbar .nav>li>a:hover>.label {
+      top: 10px;
+    }
+
+    .navbar-brand {
+      padding: 5px 15px;
+    }
+    /*Chat box CSS*/
+
+    .chatbox {
+      position: fixed;
+      bottom: 0;
+      right: 30px;
+      width: 300px;
+      height: 400px;
+      background-color: #fff;
+      font-family: 'Lato', sans-serif;
+
+      -webkit-transition: all 600ms cubic-bezier(0.19, 1, 0.22, 1);
+      transition: all 600ms cubic-bezier(0.19, 1, 0.22, 1);
+
+      display: -webkit-flex;
+      display: flex;
+
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+
+    .chatbox--tray {
+      bottom: -350px;
+    }
+
+    .chatbox--closed {
+      bottom: -400px;
+    }
+
+    .chatbox .form-control:focus {
+      border-color: #1f2836;
+    }
+
+    .chatbox__title,
+    .chatbox__body {
+      border-bottom: none;
+    }
+
+    .chatbox__title {
+      min-height: 50px;
+      padding-right: 10px;
+      background-color: #1f2836;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      cursor: pointer;
+
+      display: -webkit-flex;
+      display: flex;
+
+      -webkit-align-items: center;
+      align-items: center;
+    }
+
+    .chatbox__title h5 {
+      height: 50px;
+      margin: 0 0 0 15px;
+      line-height: 50px;
+      position: relative;
+      padding-left: 20px;
+
+      -webkit-flex-grow: 1;
+      flex-grow: 1;
+    }
+
+    .chatbox__title h5 a {
+      color: #fff;
+      max-width: 195px;
+      display: inline-block;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chatbox__title h5:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      background: #4CAF50;
+      border-radius: 6px;
+
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+
+    .chatbox__title__tray,
+    .chatbox__title__close {
+      width: 24px;
+      height: 24px;
+      outline: 0;
+      border: none;
+      background-color: transparent;
+      opacity: 0.5;
+      cursor: pointer;
+
+      -webkit-transition: opacity 200ms;
+      transition: opacity 200ms;
+    }
+
+    .chatbox__title__tray:hover,
+    .chatbox__title__close:hover {
+      opacity: 1;
+    }
+
+    .chatbox__title__tray span {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      border-bottom: 2px solid #fff
+    }
+
+    .chatbox__title__close svg {
+      vertical-align: middle;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.2px;
+    }
+
+    .chatbox__body,
+    .chatbox__credentials {
+      padding: 15px;
+      border-top: 0;
+      background-color: #f5f5f5;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+
+      -webkit-flex-grow: 1;
+      flex-grow: 1;
+    }
+
+    .chatbox__credentials {
+      display: none;
+    }
+
+    .chatbox__credentials .form-control {
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+
+    .chatbox__body {
+      overflow-y: auto;
+    }
+
+    .chatbox__body__message {
+      position: relative;
+    }
+
+    .chatbox__body__message p {
+      padding: 15px;
+      border-radius: 4px;
+      font-size: 14px;
+      background-color: #fff;
+      -webkit-box-shadow: 1px 1px rgba(100, 100, 100, 0.1);
+      box-shadow: 1px 1px rgba(100, 100, 100, 0.1);
+    }
+
+    .chatbox__body__message img {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      border: 2px solid #fcfcfc;
+      position: absolute;
+      top: 15px;
+    }
+
+    .chatbox__body__message--left p {
+      margin-left: 15px;
+      padding-left: 30px;
+      text-align: left;
+    }
+
+    .chatbox__body__message--left img {
+      left: -5px;
+    }
+
+    .chatbox__body__message--right p {
+      margin-right: 15px;
+      padding-right: 30px;
+      text-align: right;
+    }
+
+    .chatbox__body__message--right img {
+      right: -5px;
+    }
+
+    .chatbox__message {
+      padding: 15px;
+      min-height: 50px;
+      outline: 0;
+      resize: none;
+      border: none;
+      font-size: 12px;
+      border: 1px solid #ddd;
+      border-bottom: none;
+      background-color: #fefefe;
+    }
+
+    .chatbox--empty {
+      height: 262px;
+    }
+
+    .chatbox--empty.chatbox--tray {
+      bottom: -212px;
+    }
+
+    .chatbox--empty.chatbox--closed {
+      bottom: -262px;
+    }
+
+    .chatbox--empty .chatbox__body,
+    .chatbox--empty .chatbox__message {
+      display: none;
+    }
+
+    .chatbox--empty .chatbox__credentials {
+      display: block;
+    }
+  </style>
+
+
+
+  <!-- All JS dependencies -->
+  <script src="./bower_components/angular/angular.js"></script>
+  <script src="./bower_components/angular-route/angular-route.js"></script>
+  <script src="./bower_components/jquery/dist/jquery.js"></script>
+  <script src="/App/sockjs.min.js"></script>
+  <script src="/App/stomp.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-cookies.js"></script>
+    <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+
+  <!-- Anguler main module -->
+  <script src="./App/app.module.js"></script>
+  <script src="./App/app.route.js"></script>
+
+  <!-- Home page module -->
+  <script src="./App/components/basic/BasicServices.js"></script>
+  <script src="./App/components/basic/BasicController.js"></script>
+
+  <!-- Register module -->
+  <script src="./App/components/register/RegisterController.js"></script>
+  <script src="./App/components/register/RegisterService.js"></script>
+
+  <!-- Register module -->
+  <script src="./App/components/login/LoginController.js"></script>
+  <script src="./App/components/login/LoginService.js"></script>
+
+  <!-- Post module -->
+  <script src="./App/components/post/PostController.js"></script>
+  <script src="./App/components/post/PostService.js"></script>
+
+  <!-- Navigation bar module -->
+  <script src="./App/components/navBar/NavBarController.js"></script>
+
+  <!-- Chat module -->
+  <script src="./App/components/chatBox/ChatController.js"></script>
+  <script src="./App/components/chatBox/ChatService.js"></script>
+
+  <title>UrItSolution</title>
+</head>
+
+<body>
+  <div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavBarController as navCtrl">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        <a class="navbar-brand" href="">UrItSolution</a>
+      </div>
+      <!-- Search bar in navbar -->
+      <form id="searchBar" class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></button>
+      </form>
+      <!-- Top Menu Items -->
+      <ul class="nav navbar-right top-nav">
+        <li><a href="" data-placement="bottom" data-toggle="tooltip" href="" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
+                </a>
+        </li>
+        <li><a href="{{navCtrl.btn.url}}" data-toggle="modal" data-target="{{navCtrl.btn.dataTarget}}"><i class="fa fa-fw fa fa-question-circle"></i> {{navCtrl.btn.lable}}</a></li>
+        
+        <li><a href="">{{navCtrl.currentUser.name}}</a></li>  
+
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown">User <b class="fa fa-angle-down"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href=""><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
+            <li><a href=""><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
+            <li class="divider"></li>
+            <li><a href=""><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+      <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav side-nav">
+          <li><a href="" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> Production<i class="fa fa-fw fa-angle-left pull-right"></i></a></li>
+          <li>
+            <a href="" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i>  Clients <i class="fa fa-fw fa-angle-left pull-right"></i></a>
+            <ul id="submenu-2" class="collapse">
+              <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.1</a></li>
+              <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.2</a></li>
+              <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.3</a></li>
+            </ul>
+          </li>
+          <li><a href="#!/home/"><span class="glyphicon glyphicon-home"> Home </a></li>
+          <li><a href="#!/register/"><span class="glyphicon glyphicon-send"> Register </a></li>
+          <li><a href="#!/post/"><span class="glyphicon glyphicon-share"> Post</a></li>
+          <li><a href="#"><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>
+          <li><a href="#"><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>
+          <li><a href="#"><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+
+    <!--  -->
+    <div id="loginModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body">
+            <div ng-include="'App/components/login/login.html'"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="page-wrapper">
+      <br>
+      <br>
+
+      <div class="container">
+        <!-- Page Heading -->
+        <div class="row" id="main">
+          <div class="col-sm-10 col-md-10 well" id="content">
+            <!-- Where all the pages are routed -->
+            <div ng-view></div>
+          </div>
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+  <!-- script to hower the dropdown in the navbar -->
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+      $(".side-nav .collapse").on("hide.bs.collapse", function () {
+        $(this).prev().find(".fa").eq(1).removeClass("fa-angle-right").addClass("fa-angle-down");
+      });
+      $('.side-nav .collapse').on("show.bs.collapse", function () {
+        $(this).prev().find(".fa").eq(1).removeClass("fa-angle-down").addClass("fa-angle-right");
+      });
+    })
+  </script>
+
+
+  <!-- Chat box Module -->
+
+  <div ng-controller="ChatController as ChatCtrl" class="chatbox chatbox--tray chatbox--empty">
+    <div class="chatbox__title">
+      <h5><a href="">Chat Box</a></h5>
+      <button class="chatbox__title__tray">
+            <span></span>
+        </button>
+    </div>
+    <p ng-repeat="message in messages | orderBy:'time':true" class="message">
+      <time>{{ChatCtrl.message.time | date:'HH:mm'}}</time>
+      Message <span ng-class="{self: message.self}">{{ChatCtrl.message.message}}</span>
+    </p>
+
+    <form novalidate class="chatbox__credentials" name="messageForm">
+      <div class="col-sm-9">
+        <div class="form-group">
+          <input type="text" placeholder=" Text here..." ng-model="ChatCtrl.message" size="100" class="form-control" id="inputName" required>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <button ng-click="ChatCtrl.addMessage()" class="btn" style="bottom:0px"><span class = "glyphicon glyphicon-send"/></button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+      (function ($) {
+        $(document).ready(function () {
+          var $chatbox = $('.chatbox'),
+            $chatboxTitle = $('.chatbox__title'),
+            $chatboxTitleClose = $('.chatbox__title__close'),
+            $chatboxCredentials = $('.chatbox__credentials');
+          $chatboxTitle.on('click', function () {
+            $chatbox.toggleClass('chatbox--tray');
+          });
+          $chatboxTitleClose.on('click', function (e) {
+            e.stopPropagation();
+            $chatbox.addClass('chatbox--closed');
+          });
+          $chatbox.on('transitionend', function () {
+            if ($chatbox.hasClass('chatbox--closed')) $chatbox.remove();
+          });
+          /*$chatboxCredentials.on('submit', function(e) {
+              e.preventDefault();
+              $chatbox.removeClass('chatbox--empty');
+          });*/
+        });
+      })(jQuery);
+  </script>
 
 </body>
+
 </html>

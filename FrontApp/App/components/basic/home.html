@@ -1,0 +1,23 @@
+<html>
+
+<head></head>
+
+<body>
+
+    <div ng-repeat="p in post">
+        <div class = "img-thumbnail">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2><time>{{p.title}}</time></h2>
+                </div>
+                <div class="col-md-3">{{p.date}}</div>
+            </div>
+            </br>
+            <p>{{p.content}}</p>
+        </div>
+        </br></br>
+    </div>
+
+</body>
+
+</html>
