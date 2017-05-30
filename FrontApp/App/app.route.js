@@ -30,6 +30,9 @@ app.config(function ($routeProvider) {
             templateUrl: 'App/components/post/getPost.html',
             controller: 'PostController',
             controllerAs: 'postCtrl'
+        }) 
+        .when('/logout', {
+            controller: 'LogoutController',
         });
 
     $routeProvider.otherwise({ redirectTo: '/login' });

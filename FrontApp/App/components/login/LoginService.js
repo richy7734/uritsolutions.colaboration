@@ -18,6 +18,10 @@ LoginModule.service('LoginService', ['$http', '$q', 'REST_URI', function ($http,
         );   
     }
 
+    this.logout = function(){
+        
+    }
+
    
 
     
