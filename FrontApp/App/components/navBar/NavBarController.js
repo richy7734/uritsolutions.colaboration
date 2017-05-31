@@ -3,8 +3,8 @@ var NavBarModule = angular.module('NavBarModule',[]);
 app.controller('NavBarController',['$scope','$location', '$rootScope', '$cookieStore','LoginService',
     function($scope,$location, $rootScope, $cookieStore,LoginService){
         var me = this;
-        me.currentUser = {};
-        me.btn = {};
+        me.currentUser = '';
+        me.currentUser = null;
     $scope.navActive = function(nav){
         if(nav == 'home'){
             $scope.home = 'active';
@@ -22,18 +22,18 @@ app.controller('NavBarController',['$scope','$location', '$rootScope', '$cookieS
     }
 
     me.currentUser = $cookieStore.get('currentUser');
-    if(me.currentUser != null){
-        me.btn = {lable : 'Logout',url : '#!/logout/', dataTarget : ''};
-    }else{
-        me.btn = {lable : 'Login',url : '', dataTarget : '#loginModal'}; 
-    }
+
+    $rootScope.$on('CallLoginBtn',function(){
+        me.currentUser = $cookieStore.get('currentUser');
+    });
 
     me.logout = function(){
         console.log("logout")
         $rootScope.currentUser = {};
         $cookieStore.remove('currentUser');
-        LoginService.logout();
-        $location.path('/');
+        LoginService.logout(me.currentUser);
+        me.currentUser = null;
+        $location.path('/home');
     }
 
 }]);

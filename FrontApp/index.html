@@ -57,7 +57,7 @@
     .top-nav>.open>a,
     .top-nav>.open>a:hover,
     .top-nav>.open>a:focus {
-      color: #fff;
+      color: #1f2836;
       background-color: #1a242f;
     }
 
@@ -438,12 +438,9 @@
       </form>
       <!-- Top Menu Items -->
       <ul class="nav navbar-right top-nav">
-        <li><a href="" data-placement="bottom" data-toggle="tooltip" href="" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
-                </a>
-        </li>
-        <li ng-if="navCtrl.currentUser == null"><a href="#" data-toggle="modal" data-target="#loginModal"><i class="fa fa-fw fa fa-question-circle"></i>Login</a></li>    
-        <li ng-if="navCtrl.currentUser != null"><a href="" ng-click="navCtrl.logout()"><i class="fa fa-fw fa fa-question-circle"></i>Logout</a></li>
-        <li ng-if="navCtrl.currentUser != null"><a href="">{{navCtrl.currentUser.name}}</a></li> 
+        <li ng-if="navCtrl.currentUser == null"><a href="" data-toggle="modal" data-target="#loginModal"><i class = "glyphicon glyphicon-log-in"></i> Login </a></li>    
+        
+        <li ng-show="navCtrl.currentUser" class = 'ng-hide'><a href=""><i class = "glyphicon glyphicon-user"></i> <span ng-bind="navCtrl.currentUser.name"> </a></li> 
         
 
         <li class="dropdown">
@@ -452,16 +449,15 @@
             <li><a href=""><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
             <li><a href=""><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
             <li class="divider"></li>
-            <li><a href=""><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+            <li ng-if="navCtrl.currentUser != null"><a href="" ng-click="navCtrl.logout()"><i class = "glyphicon glyphicon-log-out"></i> Logout</a></li>
           </ul>
         </li>
       </ul>
       <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
-          <li><a href="" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> Production<i class="fa fa-fw fa-angle-left pull-right"></i></a></li>
           <li>
-            <a href="" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i>  Clients <i class="fa fa-fw fa-angle-left pull-right"></i></a>
+            <a href="" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i>  SUBMENUS <i class="fa fa-fw fa-angle-left pull-right"></i></a>
             <ul id="submenu-2" class="collapse">
               <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.1</a></li>
               <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.2</a></li>
@@ -469,11 +465,11 @@
             </ul>
           </li>
           <li><a href="#!/home/"><span class="glyphicon glyphicon-home"> Home </a></li>
-          <li><a href="#!/register/"><span class="glyphicon glyphicon-send"> Register </a></li>
-          <li><a href="#!/post/"><span class="glyphicon glyphicon-share"> Post</a></li>
-          <li><a href="#"><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>
-          <li><a href="#"><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>
-          <li><a href="#"><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>
+          <li ng-if="navCtrl.currentUser == null"><a href="#!/register/"><span class="glyphicon glyphicon-send"> Register </a></li>
+          <li ng-if="navCtrl.currentUser != null"><a href="#!/post/"><span class="glyphicon glyphicon-share"> Post</a></li>
+          <!--<li><a href=""><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>
+          <li><a href=""><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>
+          <li><a href=""><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>-->
         </ul>
       </div>
       <!-- /.navbar-collapse -->
@@ -538,9 +534,10 @@
             <span></span>
         </button>
     </div>
-    <p ng-repeat="message in messages | orderBy:'time':true" class="message">
-      <time>{{ChatCtrl.message.time | date:'HH:mm'}}</time>
-      Message <span ng-class="{self: message.self}">{{ChatCtrl.message.message}}</span>
+    <p ng-repeat="message in ChatCtrl.messages | orderBy:'time':true" class="message">
+      
+      Message: <span ng-class="{self: message.self}">{{message.message}}</span>
+      <time>{{message.time | date:'HH:mm'}}</time>
     </p>
 
     <form novalidate class="chatbox__credentials" name="messageForm">
@@ -572,10 +569,6 @@
           $chatbox.on('transitionend', function () {
             if ($chatbox.hasClass('chatbox--closed')) $chatbox.remove();
           });
-          /*$chatboxCredentials.on('submit', function(e) {
-              e.preventDefault();
-              $chatbox.removeClass('chatbox--empty');
-          });*/
         });
       })(jQuery);
   </script>

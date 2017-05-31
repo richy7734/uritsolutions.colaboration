@@ -6,15 +6,15 @@ var BasicModule =  angular.module('BasicModule',[]);
         console.log('Post service reached...!!!!');
         console.log('Get post post module...!!');
 
-        var deferred = $q.defer();
+        
 
-        $http.get(REST_URI + '/get/post/NVIDIA GTX 1080',post).then(
+        return $http.get(REST_URI + '/get/post/NVIDIA GTX 1080',post).then(
             function (response) {
                 console.log('Post fectched sucessfully...!!!');
-                deferred.resolve(response.data);
+                return response.data;
             }, function (error) {
                 console.log('Error in post fetching...!!!');
-                deferred.resolve(error);
+                return error;
             });
         }
 

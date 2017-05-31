@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.uritsolution.dao.UserDao;
+import com.niit.uritsolution.model.Friends;
 import com.niit.uritsolution.model.User;
 
 @RestController
@@ -34,7 +35,7 @@ public class UserController {
 	
 	@RequestMapping("login")
 	public ResponseEntity<User> login(@RequestBody User user, HttpSession session){
-		user = userDao.validate(user.getEmail(), user.getPassword());
+		user = userDao.validate(user.getUsername(), user.getPassword());
 		
 		if(user == null){
 			user = new User();
@@ -52,9 +53,48 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
+	@RequestMapping("logout")
+	public ResponseEntity<User> logout(@RequestBody User user, HttpSession session){
+		
+		user.setErrorCode("200");
+		user.setError("User "+user.getName()+". Logged out successfully...!!");
+		user.setOnlineStatus(false);
+		userDao.updateUser(user);
+		
+		session.setAttribute("userLoggedin",null);
+		
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+	
 	/*
 	 * Friends module....!!!
 	 * */
 	
-	 
+	@RequestMapping("search")
+	public List<User> friendSearch(@RequestBody String name, HttpSession session){
+		
+		return userDao.friendSearch(name);
+	}
+	
+	@RequestMapping("list/friends")
+	public List<Friends> friendLIst(@RequestBody User user, HttpSession session){
+		
+		return userDao.getFriendsList(user.getId());
+	}
+	
+	@RequestMapping("send/friend/request")
+	public ResponseEntity<Friends> frndRequest(@RequestBody Friends friends, HttpSession session){
+		
+		userDao.sendFriendRequest(friends);
+		
+		return new ResponseEntity<Friends>(friends, HttpStatus.OK); 
+	}
+	
+	@RequestMapping("friend/accept")
+	public ResponseEntity<Friends> frndRequestAccept(@RequestBody Friends friends, HttpSession session){
+		
+		userDao.acceptFriendRequest(friends);
+		
+		return new ResponseEntity<Friends>(friends, HttpStatus.OK); 
+	}
 }

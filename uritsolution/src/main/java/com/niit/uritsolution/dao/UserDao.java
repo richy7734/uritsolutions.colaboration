@@ -2,6 +2,7 @@ package com.niit.uritsolution.dao;
 
 import java.util.List;
 
+import com.niit.uritsolution.model.Friends;
 import com.niit.uritsolution.model.User;
 
 public interface UserDao {
@@ -12,4 +13,9 @@ public interface UserDao {
 	public User getUserById(int id);
 	public List<User> listUser();
 	public User validate(String username, String password);
+	public List<User> friendSearch(String name);
+	public void sendFriendRequest(Friends friends);
+	public void acceptFriendRequest(Friends friends);
+	public List<Friends> getFriendsList(int userId);
+	
 }

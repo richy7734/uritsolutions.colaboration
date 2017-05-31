@@ -35,6 +35,14 @@
                         <input class="form-control" type="text" ng-model="regCtrl.user.phone" placeholder="Phone number" />
                     </div>
                 </div>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <select class = "form-control" id = "gender-dropdown" ng-model = "regCtrl.user.gender" placeholder = "Gender">
+                            <option value = "Male">Male</option>
+                            <option value = "Female">Female</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class = "col-md-1"></div>
             <div class="col-md-5">
@@ -44,6 +52,7 @@
                     <p><strong>Username : </strong>{{regCtrl.user.username}}</p><br/>
                     <p><strong>E-Mail : </strong>{{regCtrl.user.email}}</p><br/>
                     <p><strong>Phone : </strong>{{regCtrl.user.phone}}</p><br/>
+                    <p><strong>Gender : </strong>{{regCtrl.user.gender}}</p><br/>
                 </div>
                 <button ng-click="regCtrl.register()" class="btn btn-primary">Register</button>
             </div>

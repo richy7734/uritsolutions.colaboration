@@ -18,6 +18,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 	private String name;
+	private String username;
 	private String password;
 	private String phone;
 	private String email;
@@ -31,6 +32,7 @@ public class User {
 	private String errorCode;
 	@Transient
 	private String error;
+
 	public int getId() {
 		return id;
 	}
@@ -134,7 +136,13 @@ public class User {
 	public void setError(String error) {
 		this.error = error;
 	}
-	
-	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 }

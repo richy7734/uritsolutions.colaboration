@@ -1,6 +1,7 @@
 package com.niit.uritsolution.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
@@ -30,7 +32,10 @@ public class Post {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
-	private int userId;
+	private String username;
+
+	@Transient
+	private List<Comment> Comments;
 
 	public int getId() {
 		return id;
@@ -72,12 +77,20 @@ public class Post {
 		this.date = date;
 	}
 
-	public int getUserId() {
-		return userId;
+	public List<Comment> getComments() {
+		return Comments;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setComments(List<Comment> comments) {
+		Comments = comments;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

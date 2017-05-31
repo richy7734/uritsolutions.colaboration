@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.uritsolution.dao.UserDao;
+import com.niit.uritsolution.model.Friends;
 import com.niit.uritsolution.model.User;
 
 @Repository("userDao")
@@ -59,7 +60,31 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User validate(String username, String password) {
 		
-		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE email = '"+username+"' AND password = '"+password+"'",User.class).getSingleResult();
+		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE username = '"+username+"' AND password = '"+password+"'",User.class).getSingleResult();
+	}
+
+	@Override
+	public List<User> friendSearch(String name) {
+		
+		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE name = '"+name+"'", User.class).getResultList();
+	}
+
+	@Override
+	public void sendFriendRequest(Friends friends) {
+		
+		sessionFactory.getCurrentSession().save(friends);
+	}
+
+	@Override
+	public void acceptFriendRequest(Friends friends) {
+		
+		sessionFactory.getCurrentSession().update(friends);
+	}
+
+	@Override
+	public List<Friends> getFriendsList(int userId) {
+		
+		return sessionFactory.getCurrentSession().createQuery("FROM Friends WHERE userId = '"+userId+"'", Friends.class).list();
 	}
 
 }

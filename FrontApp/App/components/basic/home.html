@@ -10,10 +10,19 @@
                 <div class="col-md-9">
                     <h2><time>{{p.title}}</time></h2>
                 </div>
-                <div class="col-md-3">{{p.date}}</div>
+                <div class="col-md-3">{{p.date | date:"MM/dd/yyyy"}}</div>
             </div>
             </br>
-            <p>{{p.content}}</p>
+            <p>{{p.content}}</p><br/>
+            <div class = "row">
+                <div class = "col-sm-8">
+                    <a href = "" data-target = "" data-toggle = "" ></a>
+                </div>
+                <div class = "col-sm-4">
+                    <p style="right:600px"> - by <strong>{{p.username}}</strong></p>
+                </div>
+                
+            </div>
         </div>
         </br></br>
     </div>

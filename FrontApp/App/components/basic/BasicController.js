@@ -7,8 +7,7 @@ app.controller('BasicController', function ($http, $scope, REST_URI) {
             console.log('Post fectched sucessfully...!!!');
             $scope.post = response.data;
             console.log($scope.post.title);
-
-
+        
         }, function (error) {
             console.log('Error in post fetching...!!!');
         });

@@ -19,13 +19,12 @@ app.controller('LoginController', ['$scope', 'LoginService', '$location', '$root
                         me.user.password = "";
 
                     } else {
-                        console
-                            .log("Valid credentials. Navigating to home page")
+                        console.log("Valid credentials. Navigating to home page")
                         $rootScope.currentUser = me.user
-                        $http.defaults.headers.common['Authorization'] = 'Basic '
-                            + $rootScope.currentUser;
+                        $http.defaults.headers.common['Authorization'] = 'Basic '+ $rootScope.currentUser;
                         $cookieStore
                             .put('currentUser', $rootScope.currentUser);
+                        $rootScope.$emit('CallLoginBtn');
                         $location.path('/home');
 
                     }
