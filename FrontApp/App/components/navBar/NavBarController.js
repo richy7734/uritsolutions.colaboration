@@ -5,6 +5,7 @@ app.controller('NavBarController',['$scope','$location', '$rootScope', '$cookieS
         var me = this;
         me.currentUser = '';
         me.currentUser = null;
+        me.name = '';
     $scope.navActive = function(nav){
         if(nav == 'home'){
             $scope.home = 'active';
@@ -36,4 +37,13 @@ app.controller('NavBarController',['$scope','$location', '$rootScope', '$cookieS
         $location.path('/home');
     }
 
+    me.searchFrnds = function(){
+        $rootScope.$emit('CallSearchFriends',me.name);
+    }
+
+    me.frndRequests = function(){
+        console.log('Redirecting to Friend controller...!!');
+        $location.path('/listUser/0');
+        $rootScope.$emit('CallFrndRequests');
+    }
 }]);

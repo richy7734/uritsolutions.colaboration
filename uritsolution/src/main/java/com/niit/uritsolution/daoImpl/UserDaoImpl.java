@@ -84,7 +84,12 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<Friends> getFriendsList(int userId) {
 		
-		return sessionFactory.getCurrentSession().createQuery("FROM Friends WHERE userId = '"+userId+"'", Friends.class).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM Friends WHERE userId = '"+userId+"' OR frndId = '"+userId+"'", Friends.class).list();
+	}
+
+	@Override
+	public Friends getFriendById(int id) {
+		return sessionFactory.getCurrentSession().get(Friends.class, id);
 	}
 
 }

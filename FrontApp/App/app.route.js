@@ -31,6 +31,16 @@ app.config(function ($routeProvider) {
             controller: 'PostController',
             controllerAs: 'postCtrl'
         }) 
+         .when('/friends/:id', {
+            templateUrl: 'App/components/friends/friends.html',
+            controller: 'FriendsController',
+            controllerAs: 'frndCtrl'
+        })
+        .when('/listUser/:id', {
+            templateUrl: 'App/components/friends/listUser.html',
+            controller: 'FriendsController',
+            controllerAs: 'frndCtrl'
+        })
         .when('/logout', {
             controller: 'LogoutController',
         });

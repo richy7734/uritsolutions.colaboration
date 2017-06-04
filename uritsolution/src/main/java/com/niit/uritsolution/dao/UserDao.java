@@ -17,5 +17,6 @@ public interface UserDao {
 	public void sendFriendRequest(Friends friends);
 	public void acceptFriendRequest(Friends friends);
 	public List<Friends> getFriendsList(int userId);
+	public Friends getFriendById(int id);
 	
 }
