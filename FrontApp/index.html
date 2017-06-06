@@ -270,9 +270,10 @@
 
     .chatbox__body,
     .chatbox__credentials {
-      padding: 15px;
+      padding: 0px;
       border-top: 0;
       background-color: #f5f5f5;
+      border-top: 15px solid #f5f5f5;
       border-left: 1px solid #ddd;
       border-right: 1px solid #ddd;
 
@@ -281,6 +282,9 @@
     }
 
     .chatbox__credentials {
+      padding: 2px;
+      position: absolute;
+      bottom: 0px;
       display: none;
     }
 
@@ -310,7 +314,7 @@
       width: 40px;
       height: 40px;
       border-radius: 4px;
-      border: 2px solid #fcfcfc;
+      border: 1px solid #fcfcfc;
       position: absolute;
       top: 15px;
     }
@@ -348,11 +352,11 @@
     }
 
     .chatbox--empty {
-      height: 262px;
+      height: 530px;
     }
 
     .chatbox--empty.chatbox--tray {
-      bottom: -212px;
+      bottom: -480px;
     }
 
     .chatbox--empty.chatbox--closed {
@@ -451,18 +455,14 @@
       </form>
       <!-- Top Menu Items -->
       <ul class="nav navbar-right top-nav">
-        <li ng-show="navCtrl.currentUser" class='ng-hide'><a href="" ng-click="navCtrl.frndRequests()"><i class = "glyphicon glyphicon-user"></i> Friend Requests</a></li>
-
         <li ng-if="navCtrl.currentUser == null"><a href="" data-toggle="modal" data-target="#loginModal"><i class = "glyphicon glyphicon-log-in"></i> Login </a></li>
-
         <li ng-show="navCtrl.currentUser" class='ng-hide'><a href=""><i class = "glyphicon glyphicon-user"></i> <span ng-bind="navCtrl.currentUser.name"> </a></li>
 
 
         <li class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown">User <b class="fa fa-angle-down"></b></a>
           <ul class="dropdown-menu">
-            <li><a href=""><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
-            <li><a href=""><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
+            <li><a href="#!/user/"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
             <li class="divider"></li>
             <li ng-if="navCtrl.currentUser != null"><a href="" ng-click="navCtrl.logout()"><i class = "glyphicon glyphicon-log-out"></i> Logout</a></li>
           </ul>
@@ -483,7 +483,6 @@
           <li ng-if="navCtrl.currentUser == null"><a href="#!/register/"><span class="glyphicon glyphicon-send"> Register </a></li>
           <li ng-if="navCtrl.currentUser != null"><a href="#!/post/"><span class="glyphicon glyphicon-share"> Post</a></li>
           <li ng-if="navCtrl.currentUser != null"><a href="#!/friends/0"><span class="glyphicon glyphicon-user"> Friends</a></li>
-          <li><a href="" data-toggle="modal" data-target="#listUserModal">List Friends</a></li>
 
 
           <!--<li><a href=""><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>
@@ -502,44 +501,6 @@
         <div class="modal-content">
           <div class="modal-body">
             <div ng-include="'App/components/login/login.html'"></div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!--  -->
-    <div id="listUserModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-body">
-            <div>
-              <table id="userListTable" class="table table-hower">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Phone</th>
-                    <th>E-Mail</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Phone</th>
-                    <th>E-Mail</th>
-                    <th></th>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -592,11 +553,22 @@
             <span></span>
         </button>
     </div>
-    <p ng-repeat="message in ChatCtrl.messages | orderBy:'time':true" class="message">
+    <div ng-repeat="message in ChatCtrl.messages | orderBy:'time':true" class="message">
+      <table class="table">
 
-      Message: <span ng-class="{self: message.self}">{{message.message}}</span>
-      <time>{{message.time | date:'HH:mm'}}</time>
-    </p>
+        <col width="30%">
+        <col width="70%">
+        <tr>
+          <td><img src="{{ChatCtrl.imgPath}}{{message.userId}}.jpg" alt="img" class="img-circle" width="30" height="30"></td>
+          <td><span ng-class="{self: message.self}">{{message.message}}</span></td>
+        </tr>
+
+        <!--<tr>
+          <td></td>
+          <td><time>{{message.time | date:'HH:mm'}}</time></td>
+        </tr>-->
+      </table>
+    </div>
 
     <form novalidate class="chatbox__credentials" name="messageForm">
       <div class="col-sm-9">
@@ -630,29 +602,6 @@
           });
         });
       })(jQuery);
-  </script>
-  <script>
-    (function ($) {
-      $(document).ready(function () {
-        var $UserList = $('#userListTable').DataTable({
-          ajax: {
-            url: 'http://localhost:8084/uritsolution/all/users',
-            dataSrc: ''
-          },
-          columns: [
-            { data: 'name' },
-            { data: 'username' },
-            { data: 'phone' },
-            { data: 'email' },
-            {
-              data: 'id', mRender: function (data, type, row) {
-                return '<div><a class = "btn btn-primary" href="#!/friends/'+data+'" data-dismiss="modal">Send Request</a></div>';
-              }
-            }
-          ]
-        })
-      })
-    })(jQuery);
   </script>
 
 </body>

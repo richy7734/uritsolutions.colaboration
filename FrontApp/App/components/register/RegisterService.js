@@ -9,15 +9,13 @@ RegisterModule.service('RegisterService',['$http','$q','REST_URI',function($http
 
         var deferred = $q.defer();
 
-        $http.post(REST_URI+'/add/user',user).then(
-            function(responce){
-                deferred.resolve(response.data);
+        return $http.post(REST_URI+'/add/user',user).then(
+            function(response){
+                return (response.data);
 
             },function(error){
-                deferred.resolve(error);
+                return (error);
             }
         );
-
-        return deferred.promise;
     }
 }]); 

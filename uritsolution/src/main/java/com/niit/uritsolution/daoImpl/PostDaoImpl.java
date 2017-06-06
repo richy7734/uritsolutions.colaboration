@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.uritsolution.dao.PostDao;
+import com.niit.uritsolution.model.Comment;
 import com.niit.uritsolution.model.Post;
 
 @Repository("PostDao")
@@ -32,6 +33,18 @@ public class PostDaoImpl implements PostDao {
 	public Post getPostByPostTitle(String postTitle) {
 		
 		return sessionFactory.getCurrentSession().createQuery("FROM Post WHERE title = '"+postTitle+"'",Post.class).getSingleResult();
+	}
+
+	@Override
+	public List<Comment> getComment(int id) {
+		
+		return sessionFactory.getCurrentSession().createQuery("FROM Comment WHERE pid = '"+id+"'",Comment.class).list();
+	}
+
+	@Override
+	public void comment(Comment comment) {
+		
+		sessionFactory.getCurrentSession().save(comment);
 	}
 
 }

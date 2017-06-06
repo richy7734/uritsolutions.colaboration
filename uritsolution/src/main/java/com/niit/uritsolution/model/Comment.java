@@ -1,5 +1,6 @@
 package com.niit.uritsolution.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +12,8 @@ public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	private String cntent;
-	private int userId;
+	private String content;
+	private int pid;
 	private String username;
 
 	public int getId() {
@@ -23,20 +24,21 @@ public class Comment {
 		this.id = id;
 	}
 
-	public String getCntent() {
-		return cntent;
+
+	public String getContent() {
+		return content;
 	}
 
-	public void setCntent(String cntent) {
-		this.cntent = cntent;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public int getUserId() {
-		return userId;
+	public int getPid() {
+		return pid;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setPid(int pid) {
+		this.pid = pid;
 	}
 
 	public String getUsername() {

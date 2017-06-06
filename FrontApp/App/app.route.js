@@ -8,7 +8,8 @@ app.config(function ($routeProvider) {
         // route for the home page
         .when('/home'||'/', {
             templateUrl: 'App/components/basic/home.html',
-            controller: 'BasicController'
+            controller: 'BasicController',
+            controllerAs:'basicCtrl'
         })
 
         // route for the about page
@@ -36,14 +37,63 @@ app.config(function ($routeProvider) {
             controller: 'FriendsController',
             controllerAs: 'frndCtrl'
         })
-        .when('/listUser/:id', {
-            templateUrl: 'App/components/friends/listUser.html',
+        .when('/user', {
+            templateUrl: 'App/components/friends/user.html',
             controller: 'FriendsController',
             controllerAs: 'frndCtrl'
+        })
+        .when('/listUser', {
+            templateUrl: 'App/components/friends/listUser.html'
         })
         .when('/logout', {
             controller: 'LogoutController',
         });
 
     $routeProvider.otherwise({ redirectTo: '/login' });
+});
+app.run(function($rootScope, $location, $cookieStore, $http) {
+
+	$rootScope.$on('$locationChangeStart', function(event, next, current) {
+		console.log("$locationChangeStart")
+		var restrictedPage = $.inArray($location.path(), [  '/home.html',
+				 '/post', '/login', '/listUser',
+				'/user' ]) === -1;
+
+		console.log("restrictedPage:" + restrictedPage)
+		var loggedIn = $rootScope.currentUser.id;
+		$rootScope.username = loggedIn;
+		console.log("loggedIn:" + loggedIn + " " + $rootScope.username)
+
+		if (!loggedIn) {
+
+			if (restrictedPage) {
+				console.log("Navigating to login page:")
+
+				$location.path('/login');
+			}
+		}
+
+		else {
+
+			var role = $rootScope.currentUser.role;
+			var userRestrictedPage = $.inArray($location.path(),
+					[ "/about" ]) == 0;
+
+			if (userRestrictedPage && role != 'admin') {
+
+				alert("You can not do this operation as you are logged as : "
+						+ role)
+
+			}
+
+		}
+
+	});
+	$rootScope.currentUser = $cookieStore.get('currentUser') || {};
+
+	if ($rootScope.currentUser) {
+		$http.defaults.headers.common['Authorization'] = 'Basic '
+				+ $rootScope.currentUser;
+	}
+
 });

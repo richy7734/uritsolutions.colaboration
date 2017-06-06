@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-md-5">
+        <img src="{{frndCtrl.imageUrl}}" alt="image.jpg" class="img-circle" height="320" width="320">
+
+        <div>
+            <input class="file" type="file" file-model="myFile" name="myFile" />
+            <button ng-click="frndCtrl.uploadFile()" class="btn btn-default">upload me</button>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <h3>{{frndCtrl.currentUser.name}}</h3>
+        <p>{{frndCtrl.currentUser.username}}</p>
+        <p>{{frndCtrl.currentUser.phone}}</p>
+        <p>{{frndCtrl.currentUser.gender}}</p>
+        <p>{{frndCtrl.currentUser.email}}</p>
+    </div>
+</div>

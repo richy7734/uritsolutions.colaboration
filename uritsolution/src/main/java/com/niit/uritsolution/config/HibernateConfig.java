@@ -12,6 +12,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Configuration
 @ComponentScan(basePackages = { "com.niit.uritsolution" })
@@ -90,7 +91,7 @@ public class HibernateConfig {
 
 	/*
 	 * Multipart Resolver configuration.
-	 
+	 */
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver getMultipartResolver() {
 
@@ -99,6 +100,6 @@ public class HibernateConfig {
 		multipartResolver.setMaxUploadSize(maxUploadSize);
 
 		return multipartResolver;
-	}*/
+	}
 
 }

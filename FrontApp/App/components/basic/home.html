@@ -1,32 +1,69 @@
-<html>
-
-<head></head>
-
-<body>
-
-    <div ng-repeat="p in post">
-        <div class = "img-thumbnail">
-            <div class="row">
-                <div class="col-md-9">
-                    <h2><time>{{p.title}}</time></h2>
-                </div>
-                <div class="col-md-3">{{p.date | date:"MM/dd/yyyy"}}</div>
+<div ng-repeat="p in post">
+    <div class="img-thumbnail">
+        <div class="row">
+            <div class="col-md-9">
+                <h2>
+                    <time>{{p.title}}</time>
+                </h2>
             </div>
-            </br>
-            <p>{{p.content}}</p><br/>
-            <div class = "row">
-                <div class = "col-sm-8">
-                    <a href = "" data-target = "" data-toggle = "" ></a>
+            <div class="col-md-3">{{p.date | date:"MM/dd/yyyy"}}</div>
+        </div>
+        </br>
+        <p>{{p.content}}</p><br/>
+        <div class="row">
+            <div class="col-sm-8">
+                <a href="" data-target="#commentModal" data-toggle="modal" ng-click="getComment(p.id)">comments</a>
+            </div>
+            <div class="col-sm-4">
+                <p style="right:600px"> - by <strong>{{p.username}}</strong></p>
+            </div>
+
+        </div>
+    </div>
+    </br>
+    </br>
+</div>
+
+<div id="commentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <div ng-repeat="cmnt in comments">
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
+                                <pre>{{cmnt.content}}</pre>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8"></div>
+                            <div class="col-sm-3">--{{cmnt.username}}</div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                    </div>
+                    <div ng-if="currentUser != null">
+                        <form novalidate>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <textarea class="form-control" type="text" ng-model="basicCtrl.comment.content" placeholder="Comment"></textarea>
+                                </div>
+                            </div>
+                            <button ng-click="basicCtrl.comment()" class="btn btn-primary">Comment</button>
+                        </form>
+                    </div>
+                    <div ng-if="currentUser == null">
+                        <p class="alert">Login to comment</p>
+                    </div>
                 </div>
-                <div class = "col-sm-4">
-                    <p style="right:600px"> - by <strong>{{p.username}}</strong></p>
-                </div>
-                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-        </br></br>
+
     </div>
-
-</body>
-
-</html>
+</div>

@@ -1,15 +1,28 @@
 package com.niit.uritsolution.controller;
 
+import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.niit.uritsolution.dao.UserDao;
 import com.niit.uritsolution.model.Friends;
@@ -21,18 +34,21 @@ public class UserController {
 	@Autowired
 	UserDao userDao;
 
+	@Autowired
+	HttpServletRequest request;
+
 	@RequestMapping("all/users")
 	public List<User> getUserList() {
 		return userDao.listUser();
 	}
-	
+
 	@RequestMapping("get/user/by/id")
 	public ResponseEntity<User> getUserById(@RequestBody int id) {
 		User user = userDao.getUserById(id);
 		System.out.println("User : " + user.getName() + " fetched sucessfully.");
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping("add/user")
 	public ResponseEntity<User> addUser(@RequestBody User user) {
 		userDao.addUser(user);
@@ -58,6 +74,48 @@ public class UserController {
 		}
 
 		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "image/upload/{id}", method = RequestMethod.POST)
+	// @Produces(MediaType.APPLICATION_JSON)
+	@ResponseBody
+	public ResponseEntity<?> imageUpload(HttpServletRequest req, @PathVariable("id") int id) {
+		/*
+		 * Image Upload functionality.
+		 */
+		MultipartHttpServletRequest mr = (MultipartHttpServletRequest) req;
+		Iterator<String> itr = mr.getFileNames();
+		while (itr.hasNext()) {
+			// org.springframework.web.multipart.MultipartFile
+			MultipartFile fd = mr.getFile(itr.next());
+			String fileName = fd.getOriginalFilename();
+			System.out.println("*****" + fileName);
+
+			User user = userDao.getUserById(id);
+			
+			try {
+				/*
+				 * Creating the directory in the server context to store.
+				 */
+				String imagePath = request.getServletContext().getRealPath("/resources/images");
+				System.out.println("------- Context Path set -------");
+				File dir = new File(imagePath + File.separator);
+				System.out.println("------- Directory set to" + dir + "-------");
+				if (!dir.exists())
+					dir.mkdirs();
+				int orgName = user.getId();
+				String filePath = imagePath + File.separator + orgName + ".jpg";
+				File dest = new File(filePath);
+				System.out.println("------- Image uploaded to " + dest + "-------");
+				fd.transferTo(dest);
+
+			} catch (Exception e) {
+				System.out.println("You failed to upload " + user.getId() + " => " + e.getMessage());
+			}
+
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@RequestMapping("logout")

@@ -2,24 +2,26 @@ package com.niit.uritsolution.model;
 
 public class Message {
 
-	private String msg;
+	private String message;
 	private int id;
+	private int userId;
 
 	public Message() {
 
 	}
 
-	public Message(int id, String message) {
+	public Message(int id, String message, int userId) {
 		this.id = id;
-		this.msg = message;
+		this.message = message;
+		this.userId = userId;
 	}
 
-	public String getMsg() {
-		return msg;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setMsg(String message) {
-		this.msg = message;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public int getId() {
@@ -28,6 +30,14 @@ public class Message {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 }

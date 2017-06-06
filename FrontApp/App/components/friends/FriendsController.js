@@ -1,44 +1,94 @@
 
-app.controller('FriendsController', ['FriendsService', '$location', '$rootScope', '$cookieStore', '$scope', '$http', '$routeParams',
-    function (FriendsService, $location, $rootScope, $cookieStore, $scope, $http, $routeParams) {
+app.controller('FriendsController', ['FriendsService', '$location', '$rootScope', '$cookieStore', '$scope', '$http', '$routeParams','REST_URI',
+    function (FriendsService, $location, $rootScope, $cookieStore, $scope, $http, $routeParams,REST_URI) {
         var me = this;
         me.friends = {};
         me.friend = {};
-        $scope.users = {};
+        me.users = {};
         me.event = '';
+        me.myFriends = {};
         me.id = '';
+        me.friends = null;
+        me.users = null;
         console.log("Friends Controller Invoked");
         me.currentUser = $cookieStore.get('currentUser');
+        me.imageUrl = REST_URI+'/resources/images/'+me.currentUser.id+'.jpg';
+        me.imgPath = REST_URI+'/resources/images/';
+        FriendsService.getFrndRequests(me.currentUser).then(
+            function (data) {
+                me.myFriends = data;
 
-        $rootScope.$on('CallFrndRequests',function(){
-            console.log('Friend Controller reached...!!');
+            }, function (error) {
+                alert(error);
+            }
+        );
+
+        me.uploadFile = function () {
+           
+            console.log('file is ');
+            console.dir($scope.myFile);
+            FriendsService.uploadFileToUrl($scope.myFile,me.currentUser);
+            me.imageUrl = REST_URI+'/resources/images/'+me.currentUser.id+'.jpg';
+
+        };
+
+        me.myFrnds = function () {
+            me.users = null;
+            me.friends = null;
             FriendsService.getFrndRequests(me.currentUser).then(
-                function(data){
-                    me.friends = data;
-                    
-                },function(error){
-                    alert(error);
-                }
-            );
-        });
+                function (data) {
+                    me.myFriends = data;
 
-        me.accept = function(id){
-            console.log('Accepting request of ID: '+ id);
-            FriendsService.acceptRequest(id).then(
-                function(data){
-                    alert('Request accepted..!!');
-                },
-                function(error){
+                }, function (error) {
                     alert(error);
                 }
             );
         }
-      
 
-        if ($routeParams.id != null || $routeParams != 0 || $routeParams != '0') {
-            if (me.currentUser != null || me.currentUser != ''){
+        me.getUsers = function () {
+            me.friends = null;
+            me.myFriends = null;
+            console.log('Fetching Users....!!');
+            FriendsService.getUsers().then(
+                function (data) {
+                    console.log('Users fetched');
+                    me.users = data;
+
+                }, function (error) {
+                    alert(error);
+                }
+            );
+        }
+
+        me.frndRequests = function () {
+            me.users = null;
+            me.myFriends = null;
+            console.log('Friend Controller reached...!!');
+            FriendsService.getFrndRequests(me.currentUser).then(
+                function (data) {
+                    me.friends = data;
+
+                }, function (error) {
+                    alert(error);
+                }
+            );
+        }
+
+        me.accept = function (id) {
+            console.log('Accepting request of ID: ' + id);
+            FriendsService.acceptRequest(id).then(
+                function (data) {
+                    alert('Request accepted..!!');
+                },
+                function (error) {
+                    alert(error);
+                }
+            );
+        }
+        me.sendRequest = function (id) {
+            if (me.currentUser != null || me.currentUser != '') {
                 me.friend.userId = me.currentUser.id;
-                me.friend.frndId = $routeParams.id;
+                me.friend.frndId = id;
                 FriendsService.sendRequest(me.friend).then(
                     function (data) {
                         me.friend = data;
@@ -47,7 +97,13 @@ app.controller('FriendsController', ['FriendsService', '$location', '$rootScope'
                         alert(error);
                     }
                 );
+            } else {
+                alert("OOps....You have to login first..!!");
             }
+        }
+
+        if ($routeParams.id != null || $routeParams != 0 || $routeParams != '0') {
+
         }
     }
 ]);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.uritsolution.dao.PostDao;
+import com.niit.uritsolution.model.Comment;
 import com.niit.uritsolution.model.Post;
 import com.niit.uritsolution.model.Responce;
 
@@ -41,5 +42,21 @@ public class PostController {
 	@RequestMapping("/get/post/{postTitle}")
 	public Post getPostByTitle(@PathVariable("postTitle")String postTitle){
 		return postDao.getPostByPostTitle(postTitle);
+	}
+	
+	@RequestMapping("/get/comments/{id}")
+	public List<Comment> getAllComments(@PathVariable("id")int id){
+		return postDao.getComment(id);
+	}
+	
+	@RequestMapping("/comment/save/{pid}/{username}")
+	public List<Comment> commentSave(@RequestBody String content,@PathVariable("pid") int pid,@PathVariable("username") String username){
+		Comment comment = new Comment();
+		comment.setContent(content);
+		comment.setPid(pid);
+		comment.setUsername(username);
+		System.out.println("Comment is :"+comment.getContent());
+		postDao.comment(comment);
+		return postDao.getComment(comment.getPid());
 	}
 }

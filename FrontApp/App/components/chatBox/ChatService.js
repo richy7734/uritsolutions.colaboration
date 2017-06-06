@@ -12,8 +12,8 @@ ChatModule.service('ChatService',['$q','$timeout','REST_URI', function($q, $time
 
 	service.RECONNECT_TIMEOUT = 30000;
 	service.SOCKET_URL = REST_URI+"/chat";
-	service.CHAT_TOPIC =  REST_URI+"/topic/message";
-	service.CHAT_BROKER = REST_URI+"/topic/chat";
+	service.CHAT_TOPIC =  "/topic/message";
+	service.CHAT_BROKER = "/app/chat";
 
 	console.log("Socket Service URLs initialized...!!");
 
@@ -23,7 +23,7 @@ ChatModule.service('ChatService',['$q','$timeout','REST_URI', function($q, $time
 		return listener.promise;
 	};
 
-	service.send = function(message) {
+	service.send = function(message,userId) {
 		console.log('Inside ChatService.send')
 		console.log('Message :' + message)
 		var id = Math.floor(Math.random() * 1000000);
@@ -32,7 +32,8 @@ ChatModule.service('ChatService',['$q','$timeout','REST_URI', function($q, $time
 			priority : 9
 		}, JSON.stringify({
 			message : message,
-			id : id
+			id : id,
+			userId : userId
 		}));
 		messageIds.push(id);
 		console.log('Inside chat service ' + messageIds + " " + message)
@@ -50,6 +51,7 @@ ChatModule.service('ChatService',['$q','$timeout','REST_URI', function($q, $time
 		console.log("getmessage")
 		var message = JSON.parse(data), out = {};
 		out.message = message.message;
+		out.userId = message.userId
 		out.time = new Date(message.time);
 		return out;
 	};

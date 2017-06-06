@@ -7,7 +7,7 @@ public class OutMessage extends Message {
 	private Date time;
 
 	public OutMessage(Message original, Date time) {
-		super(original.getId(), original.getMsg());
+		super(original.getId(), original.getMessage(), original.getUserId());
 		this.time = time;
 	}
 
