@@ -12,5 +12,7 @@ public interface PostDao {
 	public Post getPostByPostTitle(String postTitle);
 	public List<Comment> getComment(int id);
 	public void comment(Comment comment);
+	public List<Post> getPostListByFrmId(int frmId);
+	public Post getPostById(int id);
 
 }

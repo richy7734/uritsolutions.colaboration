@@ -1,0 +1,23 @@
+<div>
+    <table id="userListTable" class="table table-hower">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Phone</th>
+                <th>E-Mail</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in users">
+                <td>{{user.name}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.phone}}</td>
+                <td>{{user.email}}</td>
+                <td><a class="btn btn-primary" href="" ng-click="approve(user.id)">Approve</a></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

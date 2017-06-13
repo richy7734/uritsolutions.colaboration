@@ -1,6 +1,10 @@
 <div ng-repeat="p in post">
     <div class="img-thumbnail">
-        <div class="row">
+        <div class="col-sm-4">
+            <img class="img-rounded" src="{{imageUrl}}/{{p.id}}.jpg" alt="image.jpg" class="img-circle" height="220" width="220">
+        </div>
+
+        <div class="col-sm-8 row">
             <div class="col-md-9">
                 <h2>
                     <time>{{p.title}}</time>
@@ -11,7 +15,10 @@
         </br>
         <p>{{p.content}}</p><br/>
         <div class="row">
-            <div class="col-sm-8">
+            <div class = "col-sm-3">
+
+            </div>
+            <div class="col-sm-5">
                 <a href="" data-target="#commentModal" data-toggle="modal" ng-click="getComment(p.id)">comments</a>
             </div>
             <div class="col-sm-4">

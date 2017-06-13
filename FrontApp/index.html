@@ -422,6 +422,14 @@
   <script src="./App/components/friends/FriendsController.js"></script>
   <script src="./App/components/friends/FriendsService.js"></script>
 
+  <!-- Admin module -->
+  <script src="./App/components/admin/AdminController.js"></script>
+  <script src="./App/components/admin/AdminServices.js"></script>
+
+  <!-- Forum module -->
+  <script src="./App/components/forum/ForumController.js"></script>
+  <script src="./App/components/forum/ForumServices.js"></script>
+
   <!-- Navigation bar module -->
   <script src="./App/components/navBar/NavBarController.js"></script>
 
@@ -462,7 +470,7 @@
         <li class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown">User <b class="fa fa-angle-down"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="#!/user/"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
+            <li><a href="#!/user/"><i class="fa fa-fw fa-user"></i> My Profile</a></li>
             <li class="divider"></li>
             <li ng-if="navCtrl.currentUser != null"><a href="" ng-click="navCtrl.logout()"><i class = "glyphicon glyphicon-log-out"></i> Logout</a></li>
           </ul>
@@ -471,18 +479,20 @@
       <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
-          <li>
+          <!--<li>
             <a href="" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i>  SUBMENUS <i class="fa fa-fw fa-angle-left pull-right"></i></a>
             <ul id="submenu-2" class="collapse">
               <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.1</a></li>
               <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.2</a></li>
               <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.3</a></li>
             </ul>
-          </li>
+          </li>-->
           <li><a href="#!/home/"><span class="glyphicon glyphicon-home"> Home </a></li>
           <li ng-if="navCtrl.currentUser == null"><a href="#!/register/"><span class="glyphicon glyphicon-send"> Register </a></li>
           <li ng-if="navCtrl.currentUser != null"><a href="#!/post/"><span class="glyphicon glyphicon-share"> Post</a></li>
           <li ng-if="navCtrl.currentUser != null"><a href="#!/friends/0"><span class="glyphicon glyphicon-user"> Friends</a></li>
+          <li ng-if="navCtrl.currentUser != null"><a href="#!/addForum/"><span class="glyphicon glyphicon-education"> Forum</a></li>
+          <li ng-if="navCtrl.currentUser != null && navCtrl.currentUser.role == 'ROLE_ADMIN'"><a href="#!/admin/"><span class="glyphicon glyphicon-user"> Admin Page</a></li>
 
 
           <!--<li><a href=""><i class="fa fa-fw fa fa-question-circle"></i> Outsource</a></li>
@@ -559,14 +569,9 @@
         <col width="30%">
         <col width="70%">
         <tr>
-          <td><img src="{{ChatCtrl.imgPath}}{{message.userId}}.jpg" alt="img" class="img-circle" width="30" height="30"></td>
+          <td><img src="{{ChatCtrl.imgPath}}{{message.userId}}.jpg" alt="img" class="img-circle" width="40" height="40"></td>
           <td><span ng-class="{self: message.self}">{{message.message}}</span></td>
         </tr>
-
-        <!--<tr>
-          <td></td>
-          <td><time>{{message.time | date:'HH:mm'}}</time></td>
-        </tr>-->
       </table>
     </div>
 

@@ -76,7 +76,7 @@ app.controller('FriendsController', ['FriendsService', '$location', '$rootScope'
 
         me.accept = function (id) {
             console.log('Accepting request of ID: ' + id);
-            FriendsService.acceptRequest(id).then(
+            FriendsService.acceptRequest(id,me.currentUser.id).then(
                 function (data) {
                     alert('Request accepted..!!');
                 },

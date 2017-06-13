@@ -15,8 +15,10 @@ public interface UserDao {
 	public User validate(String username, String password);
 	public List<User> friendSearch(String name);
 	public void sendFriendRequest(Friends friends);
-	public void acceptFriendRequest(Friends friends);
+	public void acceptFriendRequest(Friends friends,User user);
 	public List<Friends> getFriendsList(int userId);
 	public Friends getFriendById(int id);
+	public List<User> listUserAdmin();
+	public boolean checkUser(User user);
 	
 }

@@ -32,8 +32,8 @@ app.controller('LoginController', ['$scope', 'LoginService', '$location', '$root
                 },
                 function (errResponse) {
 
-                    console
-                        .error('Error while authenticate Users');
+                    console.error('Error while authenticate Users');
+                    alert(errResponse.data.error);
                 });
 
         }

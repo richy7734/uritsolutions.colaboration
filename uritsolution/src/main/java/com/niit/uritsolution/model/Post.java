@@ -26,13 +26,16 @@ public class Post {
 
 	private String category;
 
-	@Column(columnDefinition = "longvarchar")
+	@Column(columnDefinition = "LONG VARCHAR")
 	private String content;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "POST_DATE",columnDefinition = "TIMESTAMP")
 	private Date date;
 
 	private String username;
+
+	private int grpId;
 
 	@Transient
 	private List<Comment> Comments;
@@ -91,6 +94,14 @@ public class Post {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public int getGrpId() {
+		return grpId;
+	}
+
+	public void setGrpId(int grpId) {
+		this.grpId = grpId;
 	}
 
 }

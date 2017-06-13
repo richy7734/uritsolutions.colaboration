@@ -7,12 +7,32 @@ PostModule.service('PostService', ['$http', '$q', 'REST_URI', function ($http, $
 
         var deferred = $q.defer();
 
-        $http.post(REST_URI + '/save/post',post).then(
+        return $http.post(REST_URI + '/save/post',post).then(
             function (response) {
-                deferred.resolve(response.data);
+                return response.data;
+            },null
+        );
+    }
+    this.uploadFileToUrl = function (file, post) {
+        var fd = new FormData();
+        fd.append('file', file);
+
+        $http({
+            method: 'POST',
+            url: REST_URI + '/image/upload/post/' + post.id, // The URL to Post.
+            headers: { 'Content-Type': undefined }, // Set the Content-Type to undefined always.
+            data: fd,
+            transformRequest: function (data, headersGetterFunction) {
+                return data;
+            }
+        }).then(
+            function (response) {
+                alert(response.data);
             }, function (error) {
-                deferred.resolve(error);
-            });
+                alert(error);
+            }
+        );
+
     }
 
    

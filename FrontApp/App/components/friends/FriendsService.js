@@ -76,8 +76,8 @@ FriendsModule.service('FriendsService', ['$http', '$timeout', 'REST_URI', functi
         );
     }
 
-    this.acceptRequest = function (id) {
-        return $http.post(REST_URI + '/friend/accept', id).then(
+    this.acceptRequest = function (id,cuid) {
+        return $http.post(REST_URI + '/friend/accept/'+cuid, id).then(
             function (response) {
 
                 return response.data;

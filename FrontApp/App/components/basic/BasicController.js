@@ -5,6 +5,7 @@ app.controller('BasicController',['$http', '$scope', 'REST_URI','$location', '$r
     var me = this;
     $scope.post = {};
     $scope.p = {};
+    $scope.imageUrl;
     me.comment = {};
     $scope.comments = {};
     $http.get(REST_URI + '/get/post').then(
@@ -12,6 +13,7 @@ app.controller('BasicController',['$http', '$scope', 'REST_URI','$location', '$r
             console.log('Post fectched sucessfully...!!!');
             $scope.post = response.data;
             console.log($scope.post.title);
+            $scope.imageUrl = REST_URI+'/resources/images/posts';
         
         }, function (error) {
             console.log('Error in post fetching...!!!');

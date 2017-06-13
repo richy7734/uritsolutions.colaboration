@@ -47,6 +47,16 @@ app.config(function ($routeProvider) {
         })
         .when('/logout', {
             controller: 'LogoutController',
+        })
+        .when('/admin', {
+            templateUrl: 'App/components/admin/admin.html',
+            controller: 'AdminController',
+            controllerAs:'adminCtrl'
+        })
+        .when('/addForum', {
+            templateUrl: 'App/components/forum/addForum.html',
+            controller: 'ForumController',
+            controllerAs:'frmCtrl'
         });
 
     $routeProvider.otherwise({ redirectTo: '/login' });
@@ -55,9 +65,13 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
 
 	$rootScope.$on('$locationChangeStart', function(event, next, current) {
 		console.log("$locationChangeStart")
-		var restrictedPage = $.inArray($location.path(), [  '/home.html',
-				 '/post', '/login', '/listUser',
-				'/user' ]) === -1;
+        console.log('The path is :'+$location.path());
+        console.log('The inArray::: '+$.inArray($location.path(), [
+				 '/post', '/listUser',
+				'/user' ]));
+		var restrictedPage = $.inArray($location.path(), [
+				 '/home/', '/register/',
+				'/login','/home','/register' ]) === -1;
 
 		console.log("restrictedPage:" + restrictedPage)
 		var loggedIn = $rootScope.currentUser.id;
@@ -65,7 +79,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
 		console.log("loggedIn:" + loggedIn + " " + $rootScope.username)
 
 		if (!loggedIn) {
-
+            console.log(restrictedPage);
 			if (restrictedPage) {
 				console.log("Navigating to login page:")
 
@@ -77,9 +91,9 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
 
 			var role = $rootScope.currentUser.role;
 			var userRestrictedPage = $.inArray($location.path(),
-					[ "/about" ]) == 0;
+					[ "/admin" ]) == 0;
 
-			if (userRestrictedPage && role != 'admin') {
+			if (userRestrictedPage && role != 'ROLE_ADMIN') {
 
 				alert("You can not do this operation as you are logged as : "
 						+ role)

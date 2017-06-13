@@ -12,19 +12,24 @@
     <li><a href="" ng-click="frndCtrl.getUsers()">Search Friends</a></li>
 </ol>
 </br>
-
-<div ng-if="frndCtrl.myFriends != null" ng-repeat="frnds in frndCtrl.myFriends">
+<div>
+    <div class="col-sm-7"></div>
+    <div class="col-sm-3"><input class = "form-control" type="text" ng-model="search" placeholder="Serach"></div>
+</div>
+<br>
+<br>
+<div ng-if="frndCtrl.myFriends != null" ng-repeat="frnds in frndCtrl.myFriends | filter : search">
     <div class="thumbnail row" ng-if="frnds.status == 'accepted'">
-        <div class="col-sm-5">
+        <div class="col-sm-4">
             <img src="{{frndCtrl.imgPath}}/{{frnds.frndId}}.jpg" alt="{{frnds.name}}" class="img-circle" height="50" width="50" >
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-5">
             <h3>{{frnds.name}}</h3>
         </div>
     </div>
 </div>
 
-<div ng-if="frndCtrl.friends != null" ng-repeat="frnds in frndCtrl.friends">
+<div ng-if="frndCtrl.friends != null" ng-repeat="frnds in frndCtrl.friends | filter : search ">
     <div class="thumbnail row" ng-if="frnds.status == 'requested'">
         <div class="col-sm-5">
             <img src="{{frndCtrl.imgPath}}/{{frnds.frndId}}.jpg" alt="{{frnds.name}}" class="img-circle" height="50" width="50" >
@@ -50,7 +55,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="user in frndCtrl.users">
+            <tr ng-repeat="user in frndCtrl.users | filter : search">
                 <td>{{user.name}}</td>
                 <td>{{user.username}}</td>
                 <td>{{user.phone}}</td>

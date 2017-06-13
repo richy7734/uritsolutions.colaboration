@@ -22,11 +22,11 @@ public class HibernateConfig {
 	/*
 	 * Data Base Configurations
 	 */
-	private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/angular";
-	private final static String DATABASE_DRIVER = "org.h2.Driver";
-	private final static String DATABASE_DIALECT = "org.hibernate.dialect.H2Dialect";
-	private final static String DATABASE_USERNAME = "angular";
-	private final static String DATABASE_PASSOWRD = "";
+	private final static String DATABASE_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	private final static String DATABASE_DRIVER = "oracle.jdbc.OracleDriver";
+	private final static String DATABASE_DIALECT = "org.hibernate.dialect.Oracle10gDialect";
+	private final static String DATABASE_USERNAME = "uritsolution";
+	private final static String DATABASE_PASSOWRD = "niit";
 
 	/*
 	 * DataSource Bean
@@ -71,7 +71,7 @@ public class HibernateConfig {
 		properties.put("hibernate.dialect", DATABASE_DIALECT);
 		properties.put("hibernate.show_sql", "true");
 		properties.put("hibernate.format_sql", "true");
-		properties.put("hibernate.hbm2ddl.auto", "update");
+		//properties.put("hibernate.hbm2ddl.auto", "update");
 		//properties.put("hibernate.connection.pool_size", 5);
 		//    <property name="hibernate.connection.pool_size">5</property>  
 

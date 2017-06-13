@@ -13,9 +13,7 @@ RegisterModule.service('RegisterService',['$http','$q','REST_URI',function($http
             function(response){
                 return (response.data);
 
-            },function(error){
-                return (error);
-            }
+            },null
         );
     }
 }]); 

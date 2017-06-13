@@ -9,18 +9,24 @@ app.controller('PostController', ['PostService', '$scope', '$location', '$rootSc
             me.currentUser = $cookieStore.get('currentUser');
             me.post.username = me.currentUser.username;
             me.post.userId = me.currentUser.userId;
-            if (me.currentUser != null || me.currentUser != ''){
+            if (me.currentUser != null || me.currentUser != '') {
                 PostService.addPost(me.post).then(
                     function (data) {
-                        me.message = data.title;
-                        console.log(me.message + ' saved successfully...!!!!');
+                        me.post = data;
                     },
                     function (error) {
                         console.log(error);
                     }
                 );
-            }else{
+            } else {
                 alert('Sorry you have to login first to Post or comment.....!!');
             }
         }
+        $scope.uploadFile = function () {
+            console.log('file is ');
+            console.dir($scope.myFile);
+            PostService.uploadFileToUrl($scope.myFile, me.post);
+            $location.path('/home');
+
+        };
     }]);

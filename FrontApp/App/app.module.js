@@ -8,7 +8,9 @@ var app = angular.module("collaborationApp",[
     'PostModule',
     'ChatModule',
     'ngCookies',
-    'FriendsModule'
+    'FriendsModule',
+    'AdminModule',
+    'ForumModule'
 
 ]);
 

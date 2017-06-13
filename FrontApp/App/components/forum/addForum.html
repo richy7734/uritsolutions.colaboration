@@ -1,0 +1,217 @@
+<style>
+    .breadcrumb>li+li:before {
+        color: #CCCCCC;
+        content: "// ";
+        padding: 0 5px;
+    }
+</style>
+
+<ol class="breadcrumb">
+    <li class="active"><a ng-click="showForums()" href="">Forums</a></li>
+    <li><a href="" ng-click="addForum()">Add Forums</a></li>
+    <li ng-if="people.role == 'ADMIN'"><a href="" ng-click="getRequests(people.grpId)" data-target="#listRequest" data-toggle="modal">Requests</a></li>
+    <li><a href="" ng-click="myForums()">My Forums</a></li>
+    <li ng-if="people != null"><a href="" ng-click="showPost(people.grpId)">Posts</a></li>
+    <li ng-if="people != null"><a href="" ng-click="addPost()">Add Post</a></li>
+</ol>
+<div ng-if="forumPage != null">
+    <div ng-repeat="f in forums">
+        <div class="img-thumbnail">
+            <table id="userListTable" class="table table-hower">
+                <col width="800px" />
+                <col width="70px" />
+                <tbody>
+                    <tr>
+                        <td>
+                            <h2>
+                                <time>{{f.name}}</time>
+                            </h2>
+                        </td>
+                        <td>
+                            <button href="" class="btn btn-danger"><span class ="glyphicons glyphicons-user"></span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>{{f.discription}}</p><br/>
+                        </td>
+                        <td><a href="" ng-click="joinForum(f.id)" class="btn btn-default">Join</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </br>
+        </br>
+    </div>
+</div>
+
+<form novalidate name="forumForm" ng-if="forumForm != null">
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <input class="form-control" type="text" ng-model="frmCtrl.forum.name" placeholder="Forum Name" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <textarea class="form-control" type="text" ng-model="frmCtrl.forum.discription" placeholder="Discription"></textarea>
+        </div>
+    </div>
+
+    <button ng-click="createForum()" class="btn btn-primary">Create</button>
+    </div>
+</form>
+
+<div ng-if="myForumsPage != null">
+    <div ng-repeat="p in peoples">
+        <div class="img-thumbnail">
+            <table id="userListTable" class="table table-hower">
+                <col width="760px" />
+                <col width="70px" />
+                <tbody>
+                    <tr>
+                        <td>
+                            <h2>
+                                <time>{{p.forumName}}</time>
+                            </h2>
+                        </td>
+                        <td><a href="" ng-click="enterForum(p.id)" class="btn btn-default">Enter Forum</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </br>
+        </br>
+    </div>
+</div>
+
+<div id="listRequest" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <table id="userListTable" class="table table-hower">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Forum name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="ppl in peoples">
+                            <td>{{ppl.name}}</td>
+                            <td>{{ppl.username}}</td>
+                            <th>{{ppl.forumName}}</th>
+                            <td><a class="btn btn-default" href="" ng-click="approve(ppl.id)">Accept</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Enter the forum -->
+<div ng-if="myForumPage != null">
+    <h2>{{people.forumName}}</h2>
+
+    <div ng-if="getPostPage != null">
+        <div class="row">
+            <form novalidate>
+                <div class="col-md-7">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" ng-model="frmCtrl.post.title" placeholder="Title" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <textarea class="form-control" type="text" ng-model="frmCtrl.post.content" placeholder="Post"></textarea>
+                        </div>
+                    </div>
+                    <button ng-click="frmCtrl.getPost()" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div ng-if="postPage != null">
+        <div ng-repeat="p in post">
+            <div class="img-thumbnail">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h2>
+                            <time>{{p.title}}</time>
+                        </h2>
+                    </div>
+                    <div class="col-md-3">{{p.date | date:"MM/dd/yyyy"}}</div>
+                </div>
+                </br>
+                <p>{{p.content}}</p><br/>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <a href="" data-target="#commentModal" data-toggle="modal" ng-click="getComment(p.id)">comments</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <p style="right:600px"> - by <strong>{{p.username}}</strong></p>
+                    </div>
+
+                </div>
+            </div>
+            </br>
+            </br>
+        </div>
+        <div>
+            <div id="commentModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div>
+                                <div ng-repeat="cmnt in comments">
+                                    <div class="row">
+                                        <div class="col-sm-1"></div>
+                                        <div class="col-sm-10">
+                                            <pre>{{cmnt.content}}</pre>
+                                        </div>
+                                        <div class="col-sm-1"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-8"></div>
+                                        <div class="col-sm-3">--{{cmnt.username}}</div>
+                                        <div class="col-sm-1"></div>
+                                    </div>
+                                </div>
+                                <div ng-if="currentUser != null">
+                                    <form novalidate>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <textarea class="form-control" type="text" ng-model="comment.content" placeholder="Comment"></textarea>
+                                            </div>
+                                        </div>
+                                        <button ng-click="comment()" class="btn btn-primary">Comment</button>
+                                    </form>
+                                </div>
+                                <div ng-if="currentUser == null">
+                                    <p class="alert">Login to comment</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

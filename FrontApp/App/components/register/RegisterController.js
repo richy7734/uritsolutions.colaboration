@@ -1,5 +1,5 @@
 
-app.controller('RegisterController', ['RegisterService', function (RegisterService) {
+app.controller('RegisterController', ['RegisterService','$location', function (RegisterService,$location) {
 
     var me = this;
     me.user = {};
@@ -11,9 +11,12 @@ app.controller('RegisterController', ['RegisterService', function (RegisterServi
             function (data) {
                 me.message = 'Thanks' + data.name ;
                 console.log(me.message);
+                alert('Thank you '+data.name+'. Please wait until admin approves your account.');
+                $location.path('/home');
             },
             function (error) {
                 console.log(error);
+                alert('Account already present.... Please select different username or email.');
             }
         );
 

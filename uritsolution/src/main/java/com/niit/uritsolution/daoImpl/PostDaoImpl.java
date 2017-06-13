@@ -21,7 +21,7 @@ public class PostDaoImpl implements PostDao {
 	@SuppressWarnings("unchecked")
 	public List<Post> getPost() {
 		
-		return sessionFactory.getCurrentSession().createQuery("FROM Post").list();
+		return sessionFactory.getCurrentSession().createQuery("FROM Post WHERE grpId ="+0).list();
 	}
 
 	public void addPost(Post post) {
@@ -46,5 +46,19 @@ public class PostDaoImpl implements PostDao {
 		
 		sessionFactory.getCurrentSession().save(comment);
 	}
+
+	@Override
+	public List<Post> getPostListByFrmId(int frmId) {
+		
+		return sessionFactory.getCurrentSession().createQuery("FROM Post WHERE grpId = '"+frmId+"'", Post.class).getResultList();
+	}
+
+	@Override
+	public Post getPostById(int id) {
+		
+		return sessionFactory.getCurrentSession().get(Post.class, id);
+	}
+
+	
 
 }

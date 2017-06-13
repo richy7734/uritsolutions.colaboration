@@ -48,7 +48,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> listUser() {
 		
-		return sessionFactory.getCurrentSession().createQuery("FROM User",User.class).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE enabled = '"+true+"'",User.class).list();
 	}
 
 	@Override
@@ -76,20 +76,43 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void acceptFriendRequest(Friends friends) {
+	public void acceptFriendRequest(Friends friends, User user) {
 		
 		sessionFactory.getCurrentSession().update(friends);
+		Friends tmpFrnds = new Friends();
+		tmpFrnds.setName(user.getName());
+		tmpFrnds.setStatus(friends.getStatus());
+		tmpFrnds.setUserId(friends.getFrndId());
+		tmpFrnds.setFrndId(friends.getUserId());
+		sessionFactory.getCurrentSession().save(tmpFrnds);
 	}
 
 	@Override
 	public List<Friends> getFriendsList(int userId) {
 		
-		return sessionFactory.getCurrentSession().createQuery("FROM Friends WHERE userId = '"+userId+"' OR frndId = '"+userId+"'", Friends.class).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM Friends WHERE userId = '"+userId+"'", Friends.class).getResultList();
 	}
 
 	@Override
 	public Friends getFriendById(int id) {
 		return sessionFactory.getCurrentSession().get(Friends.class, id);
+	}
+	
+	@Override
+	public List<User> listUserAdmin() {
+		
+		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE enabled = '"+false+"'",User.class).list();
+	}
+
+	@Override
+	public boolean checkUser(User user) {
+		User tempUser = new User();
+		try{
+			tempUser = sessionFactory.getCurrentSession().createQuery("FROM User WHERE username = '"+user.getUsername()+"' OR email = '"+user.getEmail()+"'", User.class).getSingleResult();
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
 	}
 
 }

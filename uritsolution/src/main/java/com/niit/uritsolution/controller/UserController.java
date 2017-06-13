@@ -3,7 +3,12 @@ package com.niit.uritsolution.controller;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.niit.uritsolution.config.EmailUtil;
 import com.niit.uritsolution.dao.UserDao;
 import com.niit.uritsolution.model.Friends;
 import com.niit.uritsolution.model.User;
@@ -51,6 +57,10 @@ public class UserController {
 
 	@RequestMapping("add/user")
 	public ResponseEntity<User> addUser(@RequestBody User user) {
+		if(userDao.checkUser(user)){
+			return new ResponseEntity<User>(user, HttpStatus.LOCKED);
+		}
+		user.setEnabled(false);
 		userDao.addUser(user);
 		System.out.println("User : " + user.getName() + " registerded sucessfully.");
 		return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -64,16 +74,22 @@ public class UserController {
 			user = new User();
 			user.setErrorCode("404");
 			user.setError("Sorry Wrong credentials or user does not exists : " + user.getName());
+			return new ResponseEntity<User>(user, HttpStatus.NOT_FOUND);
 		} else {
-			user.setErrorCode("200");
-			user.setError("Hello " + user.getName() + ". Logged in successfully...!!");
-			user.setOnlineStatus(true);
-			userDao.updateUser(user);
-
-			session.setAttribute("userLoggedin", user.getId());
+			if (user.isEnabled() == false) {
+				user = new User();
+				user.setErrorCode("420");
+				user.setError("User not aproved : " + user.getName());
+				return new ResponseEntity<User>(user, HttpStatus.LOCKED);
+			} else {
+				user.setErrorCode("200");
+				user.setError("Hello " + user.getName() + ". Logged in successfully...!!");
+				user.setOnlineStatus(true);
+				userDao.updateUser(user);
+				return new ResponseEntity<User>(user, HttpStatus.OK);
+			}
 		}
 
-		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "image/upload/{id}", method = RequestMethod.POST)
@@ -92,7 +108,7 @@ public class UserController {
 			System.out.println("*****" + fileName);
 
 			User user = userDao.getUserById(id);
-			
+
 			try {
 				/*
 				 * Creating the directory in the server context to store.
@@ -114,7 +130,7 @@ public class UserController {
 			}
 
 		}
-		
+
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -165,13 +181,58 @@ public class UserController {
 		return userDao.getFriendsList(user.getId());
 	}
 
-	@RequestMapping("friend/accept")
-	public ResponseEntity<Friends> frndRequestAccept(@RequestBody int id, HttpSession session) {
-
+	@RequestMapping("friend/accept/{currentUserId}")
+	public ResponseEntity<Friends> frndRequestAccept(@RequestBody int id,@PathVariable("currentUserId") int currentUserId) {
+		
+		User user = new User();
+		user = userDao.getUserById(currentUserId);
 		Friends friends = userDao.getFriendById(id);
 		friends.setStatus("accepted");
-		userDao.acceptFriendRequest(friends);
+		userDao.acceptFriendRequest(friends,user);
 
 		return new ResponseEntity<Friends>(friends, HttpStatus.OK);
+	}
+
+	/*
+	 * Admin Controller
+	 */
+
+	@RequestMapping("get/users/admin")
+	public List<User> getFrndsAdmin() {
+		return userDao.listUserAdmin();
+	}
+
+	@RequestMapping("approve/user/{id}")
+	public List<User> approveUser(@PathVariable("id") int id) {
+		User user = userDao.getUserById(id);
+		user.setEnabled(true);
+		userDao.updateUser(user);
+		final String fromEmail = "richy7734.rprs@gmail.com"; 
+														
+		final String password = "jesus7734"; 
+		final String toEmail = user.getEmail(); 
+
+		System.out.println("SSLEmail Start");
+		Properties props = new Properties();
+		props.put("mail.smtp.host", "smtp.gmail.com"); // SMTP Host
+		props.put("mail.smtp.socketFactory.port", "465"); // SSL Port
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); 
+		
+		props.put("mail.smtp.auth", "true"); // Enabling SMTP Authentication
+		props.put("mail.smtp.port", "465"); // SMTP Port
+
+		Authenticator auth = new Authenticator() {
+			
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(fromEmail, password);
+			}
+		};
+
+		Session session = Session.getDefaultInstance(props, auth);
+		System.out.println("Session created");
+		EmailUtil.sendEmail(session, toEmail, "UrItSolutions Approval", "Congradulations "+user.getName()+"....!!! You have been Approved by the Admin");
+
+				
+		return userDao.listUserAdmin();
 	}
 }
