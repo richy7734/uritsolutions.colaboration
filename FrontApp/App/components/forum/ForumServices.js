@@ -55,6 +55,7 @@ ForumModule.service('ForumServices', ['$http', '$q', 'REST_URI', function ($http
     }
 
     this.approve = function (id) {
+        console.log('The id is: '+id);
         return $http.post(REST_URI + '/approve/member/' + id).then(
             function (response) {
                 return response.data;

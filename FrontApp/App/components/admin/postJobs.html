@@ -1,0 +1,43 @@
+<div>
+    <div class="row">
+        <form novalidate ng-submit="adminCtrl.getJob()">
+            <div class="col-md-7">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <input class="form-control" type="text" ng-model="adminCtrl.job.title" placeholder="Title" />
+                    </div>
+                </div>
+
+                 <div class="form-group row">
+                    <div class="col-md-12">
+                        <input class="form-control" type="text" ng-model="adminCtrl.job.qualification" placeholder="Qualification" />
+                    </div>
+                </div>
+                 <div class="form-group row">
+                    <div class="col-md-12">
+                        <input class="form-control" type="text" ng-model="adminCtrl.job.location" placeholder="Location" />
+                    </div>
+                </div>
+                 <div class="form-group row">
+                    <div class="col-md-12">
+                        <input class="form-control" type="text" ng-model="adminCtrl.job.experience" placeholder="Eperience" />
+                    </div>
+                </div>
+                 <div class="form-group row">
+                    <div class="col-md-12">
+                        <input class="form-control" type="text" ng-model="adminCtrl.job.companyname" placeholder="Company Name" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <textarea class="form-control" type="text" ng-model="adminCtrl.job.description" placeholder="Description"></textarea>
+                    </div>
+                </div>
+
+                <input type="submit" class="btn btn-primary">
+            </div>
+
+        </form>
+    </div>
+</div>

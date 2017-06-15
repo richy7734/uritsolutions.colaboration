@@ -34,7 +34,7 @@ public class ForumDaoImpl implements ForumDao {
 	@Override
 	public List<People> listPeople() {
 
-		return sessionFactory.getCurrentSession().createQuery("FROM People WHERE  enabled = '"+false+"'", People.class).getResultList();
+		return sessionFactory.getCurrentSession().createQuery("FROM People WHERE  enabled = '"+0+"'", People.class).getResultList();
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class ForumDaoImpl implements ForumDao {
 	@Override
 	public List<People> getPeopleForApproval(int grpId) {
 
-		return sessionFactory.getCurrentSession().createQuery("FROM People WHERE grpId = '"+grpId+"' AND enabled = '"+false+"' AND role != 'ADMIN'", People.class).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM People WHERE grpId = '"+grpId+"' AND enabled = '"+0+"' AND role != 'ADMIN'", People.class).list();
 	}
 
 	@Override
@@ -89,6 +89,16 @@ public class ForumDaoImpl implements ForumDao {
 	public void acceptRequest(People peole) {
 		
 		sessionFactory.getCurrentSession().update(peole);
+	}
+
+	@Override
+	public boolean checkPeople(int frmId, int userId) {
+		try{
+			sessionFactory.getCurrentSession().createQuery("FROM People WHERE grpId ='"+frmId+"' AND usrId = '"+userId+"'",People.class).getSingleResult();
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
 	}
 
 }

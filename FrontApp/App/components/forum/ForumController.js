@@ -76,16 +76,15 @@ app.controller('ForumController', ['ForumServices', '$location', '$rootScope', '
             ForumServices.enterForum(id).then(
                 function (data) {
                     $scope.people = data;
+                    ForumServices.showPost($scope.people.grpId).then(
+                        function (data) {
+                            $scope.post = data;
+                        }, function (error) {
+                            console.log(error);
+                        }
+                    );
                 }, function (error) {
                     alert('Sorry either you are not part of the forum or admin has not accepted your request...!!!');
-                }
-            );
-
-            ForumServices.showPost($scope.people.grpId).then(
-                function (data) {
-                    $scope.post = data;
-                }, function (error) {
-                    console.log(error);
                 }
             );
         }
@@ -155,6 +154,7 @@ app.controller('ForumController', ['ForumServices', '$location', '$rootScope', '
             ForumServices.commentSave($scope.comment).then(
                 function (data) {
                     $scope.comments = data;
+                    $scope.comment={};
                 }, function (error) {
                     console.log(error);
                 }
@@ -182,7 +182,7 @@ app.controller('ForumController', ['ForumServices', '$location', '$rootScope', '
                 function (data) {
                     alert('Join request has been sent. you will get a mail onece approved by the group admin.');
                 }, function (error) {
-                    console.log(error);
+                    alert('You are already in the forum or your request is still pending with forum Admin.');
                 }
             );
         }

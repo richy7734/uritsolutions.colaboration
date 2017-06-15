@@ -53,10 +53,20 @@ app.config(function ($routeProvider) {
             controller: 'AdminController',
             controllerAs:'adminCtrl'
         })
+        .when('/postJobs', {
+            templateUrl: 'App/components/admin/postJobs.html',
+            controller: 'AdminController',
+            controllerAs:'adminCtrl'
+        })
         .when('/addForum', {
             templateUrl: 'App/components/forum/addForum.html',
             controller: 'ForumController',
             controllerAs:'frmCtrl'
+        })
+        .when('/jobs', {
+            templateUrl: 'App/components/job/jobs.html',
+            controller: 'JobController',
+            controllerAs:'jobCtrl'
         });
 
     $routeProvider.otherwise({ redirectTo: '/login' });
@@ -91,7 +101,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
 
 			var role = $rootScope.currentUser.role;
 			var userRestrictedPage = $.inArray($location.path(),
-					[ "/admin" ]) == 0;
+					[ "/admin,/postJobs" ]) == 0;
 
 			if (userRestrictedPage && role != 'ROLE_ADMIN') {
 

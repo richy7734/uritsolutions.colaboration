@@ -1,0 +1,86 @@
+<div id="applicationsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <table class="table table-hower">
+                        <tr ng-repeat="app in applications">
+                            <td>{{app.userEmail}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div ng-repeat="p in jobPost">
+    <div class="img-thumbnail">
+        <div ng-if="jobCtrl.currentUser.role == 'ROLE_ADMIN'">
+            <div class="col-sm-8"></div>
+            <div class="cpl-sm-4"><a href="" class="btn btn-default" data-target="#applicationsModal" data-toggle="modal" ng-click="getApplications(p.id)">Applications</a></div>
+        </div>
+        <table>
+            <col width="800">
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h2>
+                                <time>{{p.title}}</time>
+                            </h2>
+                        </div>
+                        <div class="col-md-3">{{p.date | date:"MM/dd/yyyy"}}</div>
+                    </div>
+                    </br>
+                    <p>{{p.description}}</p><br/>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <a href="" data-target="#ViewJobModal" data-toggle="modal" ng-click="getJob(p.id)">View</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    </br>
+    </br>
+    <div id="ViewJobModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <table>
+                        <col width="800">
+                        <col width="100">
+                        <tr>
+                            <td>
+                                <h1>{{p.title}}</h1>
+                                <h3>{{p.companyname}}</h3>
+                                <p>Qualification - {{p.qualification}}</p>
+                                <p>Location - {{p.location}}</p>
+                                <p>Experience - {{p.experience}}</p>
+                                <p>{{p.description}}</p>
+                            </td>
+                            <td>
+                                <a href="" class="btn btn-default" ng-click="apply(p.id)">Apply</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

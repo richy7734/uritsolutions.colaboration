@@ -61,6 +61,9 @@ public class ForumController {
 	public ResponseEntity<People> joinForum(@RequestBody User user, @PathVariable("frmId") int frmId) {
 		Forum forum = forumDao.getForumById(frmId);
 		People people = new People();
+		if(forumDao.checkPeople(frmId, user.getId())){
+			return new ResponseEntity<People>(people, HttpStatus.LOCKED);
+		}
 		people.setForumName(forum.getName());
 		people.setGroup(forum);
 		people.setName(user.getName());

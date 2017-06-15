@@ -1,9 +1,9 @@
-var AdminModule = angular.module('AdminModule',[]);
+var JobModule = angular.module('JobModule',[]);
 
-AdminModule.service('AdminServices',['$http','$q','REST_URI',function($http,$q,REST_URI){
+JobModule.service('JobServices',['$http','$q','REST_URI',function($http,$q,REST_URI){
 
-    this.getUsers = function(){
-        return $http.post(REST_URI+'/get/users/admin').then(
+    this.getJobs = function(){
+        return $http.post(REST_URI+'/list/jobs').then(
             function(response){
                 return response.data;
             },function(error){
@@ -12,8 +12,8 @@ AdminModule.service('AdminServices',['$http','$q','REST_URI',function($http,$q,R
         );
     }
 
-    this.approveUser = function(id){
-        return $http.post(REST_URI+'/approve/user/'+id).then(
+    this.applyJob = function(application){
+        return $http.post(REST_URI+'/add/job/application',application).then(
             function(response){
                 return response.data;
             },function(error){
@@ -22,8 +22,8 @@ AdminModule.service('AdminServices',['$http','$q','REST_URI',function($http,$q,R
         );
     }
 
-    this.addJob = function(job){
-        return $http.post(REST_URI+'/add/job',job).then(
+    this.getApplications = function(jobId){
+        return $http.post(REST_URI+'/get/applications/'+jobId,).then(
             function(response){
                 return response.data;
             },function(error){

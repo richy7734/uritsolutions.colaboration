@@ -4,38 +4,47 @@
 </div>
 <div>
     <div class="row">
-        <form novalidate name = "userForm">
+        <form ng-submit="regCtrl.register()" name="userForm">
             <div class="col-md-6">
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <input class="form-control" type="text" ng-model="regCtrl.user.name" placeholder="Name" />
+                        <input class="form-control" type="text" name = "name" ng-model="regCtrl.user.name" placeholder="Name" required/>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <input class="form-control" type="text" ng-model="regCtrl.user.username" placeholder="Username" />
+                        <input class="form-control" type="text" name = "username" ng-model="regCtrl.user.username" placeholder="Username"required ng-minlength="3" />
+                        <span ng-show="userForm.$dirty && userForm.username.$error.required">This is a required field</span>
+                        <span ng-show="userForm.$dirty && userForm.username.$error.minlength">Minimum length required is 4</span>
+                        <span ng-show="userForm.$dirty && userForm.username.$invalid">This field is invalid </span>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <input type="password" class="form-control" type="text" ng-model="regCtrl.user.password" placeholder="Password" />
+                        <input type="password" class="form-control" name = "password" type="text" ng-model="regCtrl.user.password" placeholder="Password" required/>
+                        <span ng-show="userForm.$dirty && userForm.password.$error.required">This is a required field</span>
+                        <span ng-show="userForm.$dirty && userForm.password.$invalid">This field is invalid </span>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <input class="form-control" type="text" ng-model="regCtrl.user.email" placeholder="E-Mail" />
+                        <input class="form-control" type="text" name="email" ng-model="regCtrl.user.email" placeholder="E-Mail" required />
+                        <span ng-show="userForm.$dirty && userForm.email.$error.required">This is a required field</span>
+                        <span ng-show="userForm.$dirty && userForm.email.$invalid">This field is invalid </span>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <input name ="phone" class="form-control" type="text" ng-model="regCtrl.user.phone" placeholder="Phone number" ng-minlength="10" ng-maxlength="10"/>
-                        <p ng-show="userForm.phone.$error.minlength">Phone should be 10 digits</p>
-                        <p ng-show="userForm.phone.$error.maxlength">Phone should be 10 digits.</p>
+                        <input name="phone" class="form-control" type="text" ng-model="regCtrl.user.phone" placeholder="Phone number" required ng-minlength="10"
+                            ng-maxlength="10" />
+                        <p ng-show="userForm.$dirty && userForm.phone.$error.minlength">Phone should be 10 digits</p>
+                        <p ng-show="userForm.$dirty && userForm.phone.$error.maxlength">Phone should be 10 digits.</p>
                         <p ng-show="userForm.phone.$error.required">Your phone is required.</p>
+                        <span ng-show="userForm.$dirty && userForm.phone.$invalid">This field is invalid </span>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -57,7 +66,7 @@
                     <p><strong>Phone : </strong>{{regCtrl.user.phone}}</p><br/>
                     <p><strong>Gender : </strong>{{regCtrl.user.gender}}</p><br/>
                 </div>
-                <button ng-click="regCtrl.register()" class="btn btn-primary">Register</button>
+                <input type="submit" value="Register" ng-disabled="myForm.$invalid" class="btn btn-primary ">
             </div>
         </form>
     </div>

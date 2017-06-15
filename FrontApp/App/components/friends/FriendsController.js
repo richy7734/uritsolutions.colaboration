@@ -86,9 +86,10 @@ app.controller('FriendsController', ['FriendsService', '$location', '$rootScope'
             );
         }
         me.sendRequest = function (id) {
-            if (me.currentUser != null || me.currentUser != '') {
+
                 me.friend.userId = me.currentUser.id;
                 me.friend.frndId = id;
+                console.log('Sending friend request...!!');
                 FriendsService.sendRequest(me.friend).then(
                     function (data) {
                         me.friend = data;
@@ -97,9 +98,7 @@ app.controller('FriendsController', ['FriendsService', '$location', '$rootScope'
                         alert(error);
                     }
                 );
-            } else {
-                alert("OOps....You have to login first..!!");
-            }
+
         }
 
         if ($routeParams.id != null || $routeParams != 0 || $routeParams != '0') {

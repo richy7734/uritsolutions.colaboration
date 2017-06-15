@@ -10,7 +10,8 @@ var app = angular.module("collaborationApp",[
     'ngCookies',
     'FriendsModule',
     'AdminModule',
-    'ForumModule'
+    'ForumModule',
+    'JobModule'
 
 ]);
 

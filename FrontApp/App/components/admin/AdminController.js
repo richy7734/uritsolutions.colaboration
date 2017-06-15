@@ -3,7 +3,8 @@ app.controller('AdminController', ['$http', '$scope', 'REST_URI', '$location', '
 
         console.log('Hello to Admin controller....!!');
         var me = this;
-        $scope.users = {};
+        me.job = {};
+        $scope.users = null;
         AdminServices.getUsers().then(
             function (data) {
                 $scope.users = data;
@@ -20,6 +21,16 @@ app.controller('AdminController', ['$http', '$scope', 'REST_URI', '$location', '
                     $scope.users = data;
                 }, function (error) {
                     console.log(error);
+                }
+            );
+        }
+
+        me.getJob = function() {
+            AdminServices.addJob(me.job).then(
+                function(data){
+                    alert('Job successfully posted...!!');
+                },function(error){
+                    alert('There was an error in posting the job.');
                 }
             );
         }

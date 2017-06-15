@@ -19,4 +19,5 @@ public interface ForumDao {
 	public List<People> getPeopleForApproval(int grpId);
 	public List<People> getPeopleByCurrentuser(int userId);
 	public void acceptRequest (People peole);
+	public boolean checkPeople(int frmId,int userId);
 }

@@ -48,7 +48,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> listUser() {
 		
-		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE enabled = '"+true+"'",User.class).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE enabled = '"+1+"'",User.class).list();
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> listUserAdmin() {
 		
-		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE enabled = '"+false+"'",User.class).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE enabled = '"+0+"'",User.class).getResultList();
 	}
 
 	@Override
