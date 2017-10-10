@@ -22,12 +22,21 @@ public class HibernateConfig {
 	/*
 	 * Data Base Configurations
 	 */
-	private final static String DATABASE_URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	/*private final static String DATABASE_URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	private final static String DATABASE_DRIVER = "oracle.jdbc.OracleDriver";
 	private final static String DATABASE_DIALECT = "org.hibernate.dialect.Oracle10gDialect";
 	private final static String DATABASE_USERNAME = "uritsolution";
-	private final static String DATABASE_PASSOWRD = "niit";
-
+	private final static String DATABASE_PASSOWRD = "niit";*/
+	/*private final static String DATABASE_URL = "jdbc:mysql://35.184.238.212:3306/uritsolutiondb";
+	private final static String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
+	private final static String DATABASE_DIALECT = "org.hibernate.dialect.MySQLDialect";
+	private final static String DATABASE_USERNAME = "root";
+	private final static String DATABASE_PASSOWRD = "jesus7734";*/
+	private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/uritsolutions";
+	private final static String DATABASE_DRIVER = "org.h2.Driver";
+	private final static String DATABASE_DIALECT = "org.hibernate.dialect.H2Dialect";
+	private final static String DATABASE_USERNAME = "uritsolutions";
+	private final static String DATABASE_PASSOWRD = "";
 	/*
 	 * DataSource Bean
 	 */

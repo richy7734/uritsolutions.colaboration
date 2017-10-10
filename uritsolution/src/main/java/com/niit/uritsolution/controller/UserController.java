@@ -48,6 +48,13 @@ public class UserController {
 		return userDao.listUser();
 	}
 
+	/*@RequestMapping("setAdmin/pakki")
+	public ResponseEntity<?> setAdminUser(){
+		
+		userDao.setAdmin();
+		return new ResponseEntity<>(HttpStatus.OK);
+	}*/
+	
 	@RequestMapping("get/user/by/id")
 	public ResponseEntity<User> getUserById(@RequestBody int id) {
 		User user = userDao.getUserById(id);
@@ -57,6 +64,7 @@ public class UserController {
 
 	@RequestMapping("add/user")
 	public ResponseEntity<User> addUser(@RequestBody User user) {
+		System.out.println("------------------- Register User Reached -------------------");
 		if(userDao.checkUser(user)){
 			return new ResponseEntity<User>(user, HttpStatus.LOCKED);
 		}

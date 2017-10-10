@@ -125,8 +125,8 @@ app.controller('ForumController', ['ForumServices', '$location', '$rootScope', '
         }
 
         me.getPost = function () {
-
-            ForumServices.addPost($scope.people.grpId, $scope.currentUser.username, me.post).then(
+            me.post.user = $scope.currentUser;
+            ForumServices.addPost($scope.people.grpId, me.post).then(
                 function (data) {
                     $scope.post = data;
                 }, function (error) {

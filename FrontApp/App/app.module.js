@@ -11,7 +11,8 @@ var app = angular.module("collaborationApp",[
     'FriendsModule',
     'AdminModule',
     'ForumModule',
-    'JobModule'
+    'JobModule',
+    'SampleModule'
 
 ]);
 

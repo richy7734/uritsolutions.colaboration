@@ -5,13 +5,14 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
 import org.springframework.stereotype.Component;
 
 @Entity
@@ -26,18 +27,19 @@ public class Post {
 
 	private String category;
 
-	@Column(columnDefinition = "LONG VARCHAR")
+	@Column(columnDefinition = "LONGVARCHAR")
 	private String content;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "POST_DATE",columnDefinition = "TIMESTAMP")
 	private Date date;
 
-	private String username;
+	@ManyToOne
+	private User user;
 
 	private int grpId;
 
-	@Transient
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Comment> Comments;
 
 	public int getId() {
@@ -88,12 +90,13 @@ public class Post {
 		Comments = comments;
 	}
 
-	public String getUsername() {
-		return username;
+
+	public User getUser() {
+		return user;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getGrpId() {

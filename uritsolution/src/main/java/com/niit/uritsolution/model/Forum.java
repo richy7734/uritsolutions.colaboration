@@ -13,7 +13,7 @@ public class Forum {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 	private String name;
-	@Column(columnDefinition = "LONG VARCHAR")
+	@Column(columnDefinition = "LONGVARCHAR")
 	private String discription;
 	private int adminId;
 

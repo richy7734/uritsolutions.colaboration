@@ -3,6 +3,7 @@ app.controller('RegisterController', ['RegisterService','$location', function (R
 
     var me = this;
     me.user = {};
+    
     console.log('Hello to register controller: ');
     me.register = function () {
         console.log('Register button clicked by :'+me.user.name);

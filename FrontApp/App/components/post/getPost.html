@@ -1,3 +1,28 @@
+<style>
+    .glyphicon-refresh-animate {
+        -animation: spin .7s infinite linear;
+        -webkit-animation: spin2 .7s infinite linear;
+    }
+
+    @-webkit-keyframes spin2 {
+        from {
+            -webkit-transform: rotate(0deg);
+        }
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        from {
+            transform: scale(1) rotate(0deg);
+        }
+        to {
+            transform: scale(1) rotate(360deg);
+        }
+    }
+</style>
+
 <div>
     <div class="row">
         <form novalidate>
@@ -14,12 +39,15 @@
                     </div>
                 </div>
 
-                <div>
+                <div ng-show="eventImageUpload">
                     <input class="file" type="file" file-model="myFile" name="myFile" />
                     <button ng-click="uploadFile()" class="btn btn-default">Upload</button>
                 </div>
                 <br>
-                <button ng-click="postCtrl.getPost()" class="btn btn-primary">Post</button>
+                <div ng-show="!eventImageUpload">
+                    <button ng-click="postCtrl.getPost(); eventHandler()" ng-show="!eventPostButton" class="btn btn-primary">Post</button>
+                    <button ng-show="eventPostButton" class="btn btn-primary"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>Post</button>
+                </div>
             </div>
 
         </form>

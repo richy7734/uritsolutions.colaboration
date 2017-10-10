@@ -1,10 +1,10 @@
 package com.niit.uritsolution.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +15,10 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 	private String content;
-	private int pid;
-	private String username;
+	@ManyToOne
+	private User user;
+	@ManyToOne
+	private Post post;
 
 	public int getId() {
 		return id;
@@ -26,7 +28,6 @@ public class Comment {
 		this.id = id;
 	}
 
-
 	public String getContent() {
 		return content;
 	}
@@ -35,20 +36,20 @@ public class Comment {
 		this.content = content;
 	}
 
-	public int getPid() {
-		return pid;
+	public User getUser() {
+		return user;
 	}
 
-	public void setPid(int pid) {
-		this.pid = pid;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public String getUsername() {
-		return username;
+	public Post getPost() {
+		return post;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setPost(Post post) {
+		this.post = post;
 	}
 
 }

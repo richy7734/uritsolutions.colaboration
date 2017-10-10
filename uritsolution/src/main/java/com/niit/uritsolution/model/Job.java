@@ -21,7 +21,7 @@ public class Job {
 	@Column
 	private String title;
 
-	@Column(columnDefinition = "LONG VARCHAR")
+	@Column(columnDefinition = "LONGVARCHAR")
 	private String description;
 
 	@Temporal(TemporalType.TIMESTAMP)

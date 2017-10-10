@@ -16,7 +16,7 @@ FriendsModule.directive('fileModel', ['$parse', function ($parse) {
     };
 }]);
 
-FriendsModule.service('FriendsService', ['$http', '$timeout', 'REST_URI', function ($http, $timeout, REST_URI) {
+FriendsModule.service('FriendsService', ['$http', '$location', '$timeout', 'REST_URI', function ($http, $location, $timeout, REST_URI) {
 
     this.uploadFileToUrl = function (file, user) {
         var fd = new FormData();
@@ -32,11 +32,11 @@ FriendsModule.service('FriendsService', ['$http', '$timeout', 'REST_URI', functi
             }
         }).then(
             function (response) {
-                alert(response.data);
+                $location.path('/user');
             }, function (error) {
                 alert(error);
             }
-        );
+            );
 
     }
 
@@ -76,8 +76,8 @@ FriendsModule.service('FriendsService', ['$http', '$timeout', 'REST_URI', functi
         );
     }
 
-    this.acceptRequest = function (id,cuid) {
-        return $http.post(REST_URI + '/friend/accept/'+cuid, id).then(
+    this.acceptRequest = function (id, cuid) {
+        return $http.post(REST_URI + '/friend/accept/' + cuid, id).then(
             function (response) {
 
                 return response.data;

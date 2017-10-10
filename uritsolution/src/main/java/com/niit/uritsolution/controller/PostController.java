@@ -63,15 +63,12 @@ public class PostController {
 		return postDao.getComment(id);
 	}
 	
-	@RequestMapping("/comment/save/{pid}/{username}")
-	public List<Comment> commentSave(@RequestBody String content,@PathVariable("pid") int pid,@PathVariable("username") String username){
-		Comment comment = new Comment();
-		comment.setContent(content);
-		comment.setPid(pid);
-		comment.setUsername(username);
+	@RequestMapping("/comment/save/{pid}")
+	public List<Post> commentSave(@PathVariable("pid") int pid,@RequestBody Comment comment){
+		comment.setPost(postDao.getPostById(pid));
 		System.out.println("Comment is :"+comment.getContent());
 		postDao.comment(comment);
-		return postDao.getComment(comment.getPid());
+		return postDao.getPost();
 	}
 	
 	@RequestMapping(value = "image/upload/post/{id}", method = RequestMethod.POST)
@@ -82,6 +79,7 @@ public class PostController {
 		 * Image Upload functionality.
 		 */
 		MultipartHttpServletRequest mr = (MultipartHttpServletRequest) req;
+		Responce responce = new Responce();
 		Iterator<String> itr = mr.getFileNames();
 		while (itr.hasNext()) {
 			// org.springframework.web.multipart.MultipartFile
@@ -106,14 +104,18 @@ public class PostController {
 				File dest = new File(filePath);
 				System.out.println("------- Image uploaded to " + dest + "-------");
 				fd.transferTo(dest);
-
+				responce.setReposneMessge("Image Uploaded successfully...!!");
+				responce.setResponceCode(200);
 			} catch (Exception e) {
 				System.out.println("You failed to upload " + post.getId() + " => " + e.getMessage());
+				responce.setReposneMessge("Image upload failed...!!");
+				responce.setResponceCode(500);
+				return new ResponseEntity<>(responce,HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		}
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(responce,HttpStatus.OK);
 	}
 
 }

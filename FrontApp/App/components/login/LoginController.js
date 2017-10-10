@@ -1,12 +1,13 @@
 app.controller('LoginController', ['$scope', 'LoginService', '$location', '$rootScope', '$cookieStore', '$http',
     function ($scope, LoginService, $location, $rootScope, $cookieStore, $http) {
         var me = this;
-
+        $scope.loading = 'false';
+        $scope.load = '';
         me.user = {};
         me.login = function () {
             console.log("Login Controller reached...!!");
+            $scope.load = 'true';
             LoginService.login(me.user).then(
-
                 function (data) {
 
                     me.user = data;
@@ -21,7 +22,7 @@ app.controller('LoginController', ['$scope', 'LoginService', '$location', '$root
                     } else {
                         console.log("Valid credentials. Navigating to home page")
                         $rootScope.currentUser = me.user
-                        $http.defaults.headers.common['Authorization'] = 'Basic '+ $rootScope.currentUser;
+                        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.currentUser;
                         $cookieStore
                             .put('currentUser', $rootScope.currentUser);
                         $rootScope.$emit('CallLoginBtn');

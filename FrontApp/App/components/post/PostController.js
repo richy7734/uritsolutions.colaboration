@@ -4,15 +4,21 @@ app.controller('PostController', ['PostService', '$scope', '$location', '$rootSc
 
         me.post = {};
         me.currentUser = {};
+        $scope.eventPostButton = false;
+        $scope.eventImageUpload = false;
+
+        $scope.eventHandler = function () {
+            $scope.eventPostButton = true;
+        }
         me.getPost = function () {
             console.log("Post Controller reached...!!");
             me.currentUser = $cookieStore.get('currentUser');
-            me.post.username = me.currentUser.username;
-            me.post.userId = me.currentUser.userId;
+            me.post.user = me.currentUser;
             if (me.currentUser != null || me.currentUser != '') {
                 PostService.addPost(me.post).then(
                     function (data) {
                         me.post = data;
+                        $scope.eventImageUpload = true;
                     },
                     function (error) {
                         console.log(error);
@@ -26,7 +32,6 @@ app.controller('PostController', ['PostService', '$scope', '$location', '$rootSc
             console.log('file is ');
             console.dir($scope.myFile);
             PostService.uploadFileToUrl($scope.myFile, me.post);
-            $location.path('/home');
 
         };
     }]);

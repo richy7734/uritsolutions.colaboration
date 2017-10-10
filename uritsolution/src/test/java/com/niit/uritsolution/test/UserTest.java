@@ -34,16 +34,20 @@ public class UserTest {
 	/*
 	 * Test Case for adding a user.
 	 */
-	/*
+	
 	@Test
 	public void addUserTest() {
 		
 		user = new User();
 
 		user.setName("Paul Richard");
+		user.setUsername("admin");
 		user.setEmail("richy7734.rprs@gmail.com");
 		user.setEnabled(true);
-		user.setPassword("password");
+		user.setGender("Male");
+		user.setRole("ADMIN");
+		user.setOnlineStatus(true);
+		user.setPassword("heloniit");
 		user.setPhone("9489547615");
 		
 		assertEquals("Product Successfully added to the database", true, userDao.addUser(user));

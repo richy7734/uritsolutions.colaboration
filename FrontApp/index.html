@@ -4,6 +4,7 @@
 <head>
 
   <style>
+
     @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
     @media(min-width:768px) {
       body {
@@ -21,15 +22,12 @@
     }
 
     #page-wrapper {
-      width: 100%;
+      width: 70%;
       padding: 0;
       background-color: #fff;
     }
 
-    @media(min-width:768px) {
-      #wrapper {
-        padding-left: 225px;
-      }
+    @media(min-width:400px) {
       #page-wrapper {
         padding: 22px 10px;
       }
@@ -414,6 +412,10 @@
   <script src="./App/components/login/LoginController.js"></script>
   <script src="./App/components/login/LoginService.js"></script>
 
+  <!-- Sample module for students -->
+  <script src="./App/components/sample/SampleController.js"></script>
+  <script src="./App/components/sample/SampleService.js"></script>
+
   <!-- Post module -->
   <script src="./App/components/post/PostController.js"></script>
   <script src="./App/components/post/PostService.js"></script>
@@ -456,7 +458,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </button>
+        </button>
         <a class="navbar-brand" href="">UrItSolution</a>
       </div>
       <!-- Search bar in navbar -->
@@ -492,6 +494,7 @@
           <li ng-if="navCtrl.currentUser != null"><a href="#!/jobs/"><span class="glyphicon glyphicon-education"> Jobs</a></li>
           <li ng-if="navCtrl.currentUser != null && navCtrl.currentUser.role == 'ROLE_ADMIN'"><a href="#!/admin/"><span class="glyphicon glyphicon-user"> Admin Page</a></li>
           <li ng-if="navCtrl.currentUser != null && navCtrl.currentUser.role == 'ROLE_ADMIN'"><a href="#!/postJobs/"><span class="glyphicon glyphicon-share">Post Jobs</a></li>
+            <li ng-if="navCtrl.currentUser != null && navCtrl.currentUser.role == 'ROLE_ADMIN'"><a href="#!/sample/"><span class="glyphicon glyphicon-share">Sample</a></li>  
         </ul>
       </div>
       <!-- /.navbar-collapse -->
@@ -515,23 +518,26 @@
     </div>
 
 
-    <div id="page-wrapper">
-      <br>
-      <br>
-
-      <div class="container">
-        <!-- Page Heading -->
-        <div class="row" id="main">
-          <div class="col-sm-10 col-md-10 well" id="content">
-            <!-- Where all the pages are routed -->
-            <div ng-view></div>
+    <div class="col-md-3"></div>
+    <div class = "col-md-9">
+      <div id="page-wrapper">
+        <br>
+        <br>
+        <div class="container">
+          <!-- Page Heading -->
+          <div class="row" id="main">
+            <div class="col-sm-10 col-md-9 well" id="content">
+              <!-- Where all the pages are routed -->
+              <div ng-view></div>
+            </div>
           </div>
+          <!-- /.row -->
         </div>
-        <!-- /.row -->
+        <!-- /.container-fluid -->
       </div>
-      <!-- /.container-fluid -->
+      <!-- /#page-wrapper -->
+
     </div>
-    <!-- /#page-wrapper -->
   </div>
   <!-- /#wrapper -->
   <!-- script to hower the dropdown in the navbar -->
@@ -602,6 +608,7 @@
         });
       })(jQuery);
   </script>
+
 
 </body>
 

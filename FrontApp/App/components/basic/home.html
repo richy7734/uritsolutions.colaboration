@@ -1,30 +1,35 @@
 <div ng-repeat="p in post">
     <div class="img-thumbnail">
-        <div class="col-sm-4">
-            <img class="img-rounded" src="{{imageUrl}}/{{p.id}}.jpg" alt="image.jpg" class="img-circle" height="220" width="220">
+        <div class="col-sm-4 ">
+            <br>
+            <img class="img-thumbnail" src="{{imageUrl}}/{{p.id}}.jpg" alt="image.jpg" class="img-circle" height="220" width="220">
         </div>
 
-        <div class="col-sm-8 row">
-            <div class="col-md-9">
-                <h2>
-                    <time>{{p.title}}</time>
-                </h2>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2>
+                        <time>{{p.title}}</time>
+                    </h2>
+                </div>
+                <div class="col-md-3">{{p.date | date:"MM/dd/yyyy"}}</div>
             </div>
-            <div class="col-md-3">{{p.date | date:"MM/dd/yyyy"}}</div>
-        </div>
-        </br>
-        <p>{{p.content}}</p><br/>
-        <div class="row">
-            <div class = "col-sm-3">
+            <div class="row">
+                </br>
+                <p>{{p.content}}</p><br/>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+
+                </div>
+                <div class="col-sm-5">
+                    <a href="" data-target="#commentModal" data-toggle="modal" ng-click="getComment(p)">comments</a>
+                </div>
+                <div class="col-sm-4">
+                    <p style="right:600px"> - by <strong>{{p.username}}</strong></p>
+                </div>
 
             </div>
-            <div class="col-sm-5">
-                <a href="" data-target="#commentModal" data-toggle="modal" ng-click="getComment(p.id)">comments</a>
-            </div>
-            <div class="col-sm-4">
-                <p style="right:600px"> - by <strong>{{p.username}}</strong></p>
-            </div>
-
         </div>
     </div>
     </br>
@@ -38,7 +43,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div>
-                    <div ng-repeat="cmnt in comments">
+                    <div ng-repeat="cmnt in post.comments">
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
@@ -48,7 +53,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-8"></div>
-                            <div class="col-sm-3">--{{cmnt.username}}</div>
+                            <div class="col-sm-3">--{{cmnt.user.username}}</div>
                             <div class="col-sm-1"></div>
                         </div>
                     </div>

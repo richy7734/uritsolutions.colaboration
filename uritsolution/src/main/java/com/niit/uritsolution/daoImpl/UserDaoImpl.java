@@ -18,6 +18,21 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	SessionFactory sessionFactory;
 	
+	public void setAdmin() {
+		User user = new User();
+		user.setEmail("richy7734.rprs@gmail.com");
+		user.setEnabled(true);
+		user.setGender("male");
+		user.setName("Paul Richard");
+		user.setOnlineStatus(true);
+		user.setPassword("jesus7734");
+		user.setPhone("9489547615");
+		user.setRole("ROLE_ADMIN");
+		user.setUsername("admin");
+		
+		sessionFactory.getCurrentSession().saveOrUpdate(user);
+	}
+	
 	public boolean addUser(User user) {
 		try{
 			sessionFactory.getCurrentSession().saveOrUpdate(user);
@@ -57,6 +72,12 @@ public class UserDaoImpl implements UserDao {
 		return sessionFactory.getCurrentSession().get(User.class, id);
 	}
 
+	@Override
+	public User getUserByUsername(String usernaem) {
+		
+		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE username = '"+usernaem+"'", User.class).getSingleResult();
+	}
+	
 	@Override
 	public User validate(String username, String password) {
 		

@@ -20,5 +20,7 @@ public interface UserDao {
 	public Friends getFriendById(int id);
 	public List<User> listUserAdmin();
 	public boolean checkUser(User user);
+	public void setAdmin();
+	User getUserByUsername(String username);
 	
 }

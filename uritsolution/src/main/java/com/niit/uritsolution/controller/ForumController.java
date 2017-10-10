@@ -126,13 +126,11 @@ public class ForumController {
 		return forumDao.getPeopleByCurrentuser(userId);
 	}
 
-	@RequestMapping("forum/post/{frmId}/{username}")
-	public ResponseEntity<?> forumPost(@RequestBody Post post, @PathVariable("frmId") int frmId,
-			@PathVariable("username") String username) {
+	@RequestMapping("forum/post/{frmId}")
+	public ResponseEntity<?> forumPost(@RequestBody Post post, @PathVariable("frmId") int frmId) {
 		post.setGrpId(frmId);
 		post.setCategory("FORUM");
 		post.setDate(new Date());
-		post.setUsername(username);
 		postDao.addPost(post);
 
 		return new ResponseEntity<>(HttpStatus.OK);
