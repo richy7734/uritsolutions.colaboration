@@ -50,7 +50,14 @@ public class PostController {
 
 	@RequestMapping("/get/post")
 	public List<Post> getPost() {
-		return postDao.getPost();
+		
+		List<Post> posts = postDao.getPost();
+		
+		for(Post post : posts) {
+			System.out.println(post);
+		}
+		
+		return posts;
 	}
 	
 	@RequestMapping("/get/post/{postTitle}")

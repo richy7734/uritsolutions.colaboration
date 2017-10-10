@@ -34,7 +34,7 @@ public class Post {
 	@Column(name = "POST_DATE",columnDefinition = "TIMESTAMP")
 	private Date date;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
 
 	private int grpId;
@@ -107,4 +107,12 @@ public class Post {
 		this.grpId = grpId;
 	}
 
+	@Override
+	public String toString() {
+		return "Post [id=" + id + ", title=" + title + ", category=" + category + ", content=" + content + ", date="
+				+ date + ", user=" + user + ", grpId=" + grpId + ", Comments=" + Comments + "]";
+	}
+
+	
+	
 }
