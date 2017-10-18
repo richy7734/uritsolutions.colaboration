@@ -88,8 +88,8 @@ FriendsModule.service('FriendsService', ['$http', '$location', '$timeout', 'REST
         );
     }
 
-    this.getUsers = function () {
-        return $http.post(REST_URI + '/all/users').then(
+    this.getUsers = function (friend) {
+        return $http.post(REST_URI + '/all/users',friend).then(
             function (response) {
 
                 return response.data;

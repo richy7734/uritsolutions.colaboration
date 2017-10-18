@@ -11,7 +11,7 @@ public interface UserDao {
 	public boolean updateUser(User user);
 	public void deleteUser(User user);
 	public User getUserById(int id);
-	public List<User> listUser();
+	public List<User> listUser(User user);
 	public User validate(String username, String password);
 	public List<User> friendSearch(String name);
 	public void sendFriendRequest(Friends friends);

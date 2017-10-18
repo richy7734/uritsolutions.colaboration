@@ -38,7 +38,7 @@ public class PostDaoImpl implements PostDao {
 	@Override
 	public List<Comment> getComment(int id) {
 		
-		return sessionFactory.getCurrentSession().createQuery("FROM Comment WHERE pid = '"+id+"'",Comment.class).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM Comment WHERE POST_ID = '"+id+"'",Comment.class).list();
 	}
 
 	@Override

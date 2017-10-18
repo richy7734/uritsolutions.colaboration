@@ -61,9 +61,9 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<User> listUser() {
+	public List<User> listUser(User user) {
 		
-		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE enabled = '"+1+"'",User.class).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM User WHERE enabled = '"+1+"' AND id != '"+user.getId()+"' ",User.class).list();
 	}
 
 	@Override
@@ -99,13 +99,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void acceptFriendRequest(Friends friends, User user) {
 		
-		sessionFactory.getCurrentSession().update(friends);
-		Friends tmpFrnds = new Friends();
-		tmpFrnds.setName(user.getName());
-		tmpFrnds.setStatus(friends.getStatus());
-		tmpFrnds.setUserId(friends.getFrndId());
-		tmpFrnds.setFrndId(friends.getUserId());
-		sessionFactory.getCurrentSession().save(tmpFrnds);
+		friends.setFriend(user);
+		friends.setStatus("");
 	}
 
 	@Override

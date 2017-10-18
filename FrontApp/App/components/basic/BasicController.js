@@ -6,8 +6,9 @@ app.controller('BasicController',['$http', '$scope', 'REST_URI','$location', '$r
     $scope.post = {};
     me.p = {};
     $scope.imageUrl;
+    $scope.comments = {};
     me.comment = {};
-
+    $scope.currentUser = $cookieStore.get('currentUser');
     $http.get(REST_URI + '/get/post').then(
         function (response) {
             console.log('Post fectched sucessfully...!!!');
@@ -23,22 +24,22 @@ app.controller('BasicController',['$http', '$scope', 'REST_URI','$location', '$r
         });
 
     $scope.getComment = function(po){
-        $scope.currentUser = $cookieStore.get('currentUser');
+        
         me.p=po;
-        console.log($scope.p.title+' selected...!!!');
+        console.log(me.p.title+' selected...!!!');
+        BasicServices.getComments(me.p.id).then(
+            function(data){
+                $scope.comments = data;
+            },null
+        );
     }
 
-    me.comment = function(){
-        var post = $scope.post;
-        post.comments.push(me.comment);
-
-        console.log('The Comment : '+me.comment.content);
-        JSON.parse(me.comment);
-        console.log('The Comment after parsing : '+me.comment);
-        BasicServices.commentSave(me.comment,$scope.p.id).then(
+    me.postComment = function(){
+        me.comment.user = $scope.currentUser;
+        console.log("Comment : "+me.comment);
+        BasicServices.commentSave(me.comment,me.p.id).then(
             function(data){
-                $scope.post = response.data;
-                console.log($scope.post[$scope.p.id].title);
+                $scope.comments = data;
                 $scope.imageUrl = REST_URI+'/resources/images/posts';
             },function(error){
                 console.log(error);

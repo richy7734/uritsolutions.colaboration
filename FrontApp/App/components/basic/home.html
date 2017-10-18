@@ -43,7 +43,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div>
-                    <div ng-repeat="cmnt in post.comments">
+                    <div ng-repeat="cmnt in comments">
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
@@ -64,7 +64,7 @@
                                     <textarea class="form-control" type="text" ng-model="basicCtrl.comment.content" placeholder="Comment"></textarea>
                                 </div>
                             </div>
-                            <button ng-click="basicCtrl.comment()" class="btn btn-primary">Comment</button>
+                            <button ng-click="basicCtrl.postComment()" class="btn btn-primary">Comment</button>
                         </form>
                     </div>
                     <div ng-if="currentUser == null">

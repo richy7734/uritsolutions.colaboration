@@ -3,13 +3,14 @@ app.controller('FriendsController', ['FriendsService', '$location', '$rootScope'
     function (FriendsService, $location, $rootScope, $cookieStore, $scope, $http, $routeParams,REST_URI) {
         var me = this;
         me.friends = {};
-        me.friend = {};
+        me.friendEntity = {};
         me.users = {};
         me.event = '';
         me.myFriends = {};
         me.id = '';
         me.friends = null;
         me.users = null;
+        $scope.defaultImage = REST_URI+'/resources/images/default.png';
         console.log("Friends Controller Invoked");
         me.currentUser = $cookieStore.get('currentUser');
         me.imageUrl = REST_URI+'/resources/images/'+me.currentUser.id+'.jpg';
@@ -49,7 +50,7 @@ app.controller('FriendsController', ['FriendsService', '$location', '$rootScope'
             me.friends = null;
             me.myFriends = null;
             console.log('Fetching Users....!!');
-            FriendsService.getUsers().then(
+            FriendsService.getUsers(me.currentUser).then(
                 function (data) {
                     console.log('Users fetched');
                     me.users = data;
@@ -85,12 +86,12 @@ app.controller('FriendsController', ['FriendsService', '$location', '$rootScope'
                 }
             );
         }
-        me.sendRequest = function (id) {
+        me.sendRequest = function (friend) {
 
-                me.friend.userId = me.currentUser.id;
-                me.friend.frndId = id;
+                me.friendEntity.user = me.currentUser.id;
+                me.friendEntity.friend = friend;
                 console.log('Sending friend request...!!');
-                FriendsService.sendRequest(me.friend).then(
+                FriendsService.sendRequest(me.friendEntity).then(
                     function (data) {
                         me.friend = data;
                     },

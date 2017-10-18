@@ -1,9 +1,12 @@
 package com.niit.uritsolution.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Friends {
@@ -11,9 +14,12 @@ public class Friends {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
-	private int userId;
-	private int frndId;
-	private String name;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	private User friend;
+
+	@OneToOne
+	private User user;
 	private String status;
 
 	public int getId() {
@@ -24,20 +30,12 @@ public class Friends {
 		this.id = id;
 	}
 
-	public int getUserId() {
-		return userId;
+	public User getFriend() {
+		return friend;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public int getFrndId() {
-		return frndId;
-	}
-
-	public void setFrndId(int frndId) {
-		this.frndId = frndId;
+	public void setFriend(User friend) {
+		this.friend = friend;
 	}
 
 	public String getStatus() {
@@ -48,12 +46,21 @@ public class Friends {
 		this.status = status;
 	}
 
-	public String getName() {
-		return name;
+	
+	
+	public User getUser() {
+		return user;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUser(User user) {
+		this.user = user;
 	}
+
+	@Override
+	public String toString() {
+		return "Friends [id=" + id + ", friend=" + friend + ", user=" + user + ", status=" + status + "]";
+	}
+
+	
 
 }

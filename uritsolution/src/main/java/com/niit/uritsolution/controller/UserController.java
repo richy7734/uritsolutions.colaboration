@@ -8,13 +8,8 @@ import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,17 +37,11 @@ public class UserController {
 	HttpServletRequest request;
 
 	@RequestMapping("all/users")
-	public List<User> getUserList() {
-		return userDao.listUser();
+	public List<User> getUserList(@RequestBody User user) {
+		return userDao.listUser(user);
 	}
 
-	/*@RequestMapping("setAdmin/pakki")
-	public ResponseEntity<?> setAdminUser(){
-		
-		userDao.setAdmin();
-		return new ResponseEntity<>(HttpStatus.OK);
-	}*/
-	
+
 	@RequestMapping("get/user/by/id")
 	public ResponseEntity<User> getUserById(@RequestBody int id) {
 		User user = userDao.getUserById(id);
@@ -172,15 +159,11 @@ public class UserController {
 	}
 
 	@RequestMapping("send/friend/request")
-	public ResponseEntity<Friends> frndRequest(@RequestBody Friends friends, HttpSession session) {
-		User user = userDao.getUserById(friends.getFrndId());
-		friends.setName(user.getName());
-		friends.setStatus("requested");
-		System.out.println("The Friend data is : " + friends.getUserId() + " " + friends.getFrndId() + " "
-				+ friends.getName() + " " + friends.getStatus());
-		userDao.sendFriendRequest(friends);
-
-		return new ResponseEntity<Friends>(friends, HttpStatus.OK);
+	public ResponseEntity<Friends> frndRequest(@RequestBody Friends friend) {
+		
+		
+		
+		return new ResponseEntity<Friends>(friend, HttpStatus.OK);
 	}
 
 	@RequestMapping("get/friend/request")

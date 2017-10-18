@@ -3,6 +3,7 @@ package com.niit.uritsolution.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,7 +40,7 @@ public class Post {
 
 	private int grpId;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private List<Comment> Comments;
 
 	public int getId() {

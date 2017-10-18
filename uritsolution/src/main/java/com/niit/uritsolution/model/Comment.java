@@ -1,6 +1,7 @@
 package com.niit.uritsolution.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 	private String content;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
 	@ManyToOne
 	private Post post;
@@ -52,4 +53,10 @@ public class Comment {
 		this.post = post;
 	}
 
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", content=" + content + ", user=" + user + ", post=" + post + "]";
+	}
+
+	
 }

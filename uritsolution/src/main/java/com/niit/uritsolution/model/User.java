@@ -1,12 +1,17 @@
 package com.niit.uritsolution.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Component;
 
 @Entity
@@ -26,7 +31,9 @@ public class User {
 	private boolean enabled;
 	private boolean onlineStatus;
 	private String status;
-	private String reason;
+	
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "friend")
+	private List<Friends> friends;
 	private String gender;
 	@Transient
 	private String errorCode;
@@ -105,14 +112,6 @@ public class User {
 		this.status = status;
 	}
 
-	public String getReason() {
-		return reason;
-	}
-
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
-
 	public String getGender() {
 		return gender;
 	}
@@ -145,14 +144,20 @@ public class User {
 		this.username = username;
 	}
 
+	public List<Friends> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(List<Friends> friends) {
+		this.friends = friends;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", phone="
 				+ phone + ", email=" + email + ", role=" + role + ", enabled=" + enabled + ", onlineStatus="
-				+ onlineStatus + ", status=" + status + ", reason=" + reason + ", gender=" + gender + ", errorCode="
+				+ onlineStatus + ", status=" + status + ", friends=" + friends + ", gender=" + gender + ", errorCode="
 				+ errorCode + ", error=" + error + "]";
 	}
 
-	
-	
 }

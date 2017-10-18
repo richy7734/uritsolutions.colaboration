@@ -53,10 +53,10 @@ public class PostController {
 		
 		List<Post> posts = postDao.getPost();
 		
-		for(Post post : posts) {
+/*		for(Post post : posts) {
 			System.out.println(post);
 		}
-		
+*/		
 		return posts;
 	}
 	
@@ -71,11 +71,11 @@ public class PostController {
 	}
 	
 	@RequestMapping("/comment/save/{pid}")
-	public List<Post> commentSave(@PathVariable("pid") int pid,@RequestBody Comment comment){
+	public List<Comment> commentSave(@PathVariable("pid") int pid,@RequestBody Comment comment){
 		comment.setPost(postDao.getPostById(pid));
-		System.out.println("Comment is :"+comment.getContent());
+//		System.out.println("Comment is :"+comment);
 		postDao.comment(comment);
-		return postDao.getPost();
+		return postDao.getComment(pid);
 	}
 	
 	@RequestMapping(value = "image/upload/post/{id}", method = RequestMethod.POST)
