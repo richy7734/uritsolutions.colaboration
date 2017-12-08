@@ -23,7 +23,7 @@ app.controller('NavBarController',['$scope','$location', '$rootScope', '$cookieS
     }
 
     me.currentUser = $cookieStore.get('currentUser');
-
+    console.log(me.currentUser);
     $rootScope.$on('CallLoginBtn',function(){
         me.currentUser = $cookieStore.get('currentUser');
     });

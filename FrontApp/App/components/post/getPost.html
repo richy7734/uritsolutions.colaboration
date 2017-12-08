@@ -1,41 +1,18 @@
-<style>
-    .glyphicon-refresh-animate {
-        -animation: spin .7s infinite linear;
-        -webkit-animation: spin2 .7s infinite linear;
-    }
-
-    @-webkit-keyframes spin2 {
-        from {
-            -webkit-transform: rotate(0deg);
-        }
-        to {
-            -webkit-transform: rotate(360deg);
-        }
-    }
-
-    @keyframes spin {
-        from {
-            transform: scale(1) rotate(0deg);
-        }
-        to {
-            transform: scale(1) rotate(360deg);
-        }
-    }
-</style>
-
 <div>
     <div class="row">
         <form novalidate>
             <div class="col-md-7">
-                <div class="form-group row">
+                <div class="input-field row">
                     <div class="col-md-12">
-                        <input class="form-control" type="text" ng-model="postCtrl.post.title" placeholder="Title" />
+                        <input id="title" class="validate" type="text" ng-model="postCtrl.post.title" />
+                        <label for="title">Title</label>
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="input-field row">
                     <div class="col-md-12">
-                        <textarea class="form-control" type="text" ng-model="postCtrl.post.content" placeholder="Post"></textarea>
+                        <textarea id="content" class="materialize-textarea" type="text" ng-model="postCtrl.post.content"></textarea>
+                        <label for="content">Post</label>
                     </div>
                 </div>
 
@@ -46,10 +23,23 @@
                 <br>
                 <div ng-show="!eventImageUpload">
                     <button ng-click="postCtrl.getPost(); eventHandler()" ng-show="!eventPostButton" class="btn btn-primary">Post</button>
-                    <button ng-show="eventPostButton" class="btn btn-primary"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>Post</button>
+                    <span ng-show="eventPostButton">
+                        <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-green-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
                 </div>
             </div>
-
         </form>
     </div>
 </div>

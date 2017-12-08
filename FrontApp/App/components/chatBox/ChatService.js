@@ -62,7 +62,7 @@ ChatModule.service('ChatService',['$q','$timeout','REST_URI', function($q, $time
 			listener.notify(getMessage(data.body));
 		});
 	};
-
+	
 	var initialize = function() {
 		console.log("Socket initializing with the service URL : "+service.SOCKET_URL);
 		socket.client = new SockJS(service.SOCKET_URL);

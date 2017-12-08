@@ -1,6 +1,6 @@
 // Specify the backend url from where you are going to get the values
 //app.constant('REST_URI', 'http://uritsolutions-env.9apr4ip7re.ap-south-1.elasticbeanstalk.com/');
-app.constant('REST_URI', 'http://localhost:8084/uritsolution/');
+app.constant('REST_URI', 'http://localhost:8080/uritsolution/');
 
 
 app.config(function ($routeProvider) {
@@ -73,9 +73,12 @@ app.config(function ($routeProvider) {
             templateUrl: 'App/components/sample/sample.html',
             controller: 'SampleController',
             controllerAs: 'smplCtrl'
+        })
+        .when('/default', {
+            templateUrl: 'App/components/default/default.html'
         });
 
-    $routeProvider.otherwise({ redirectTo: '/login' });
+    $routeProvider.otherwise({ redirectTo: '/default' });
 });
 app.run(function ($rootScope, $location, $cookieStore, $http) {
 
@@ -97,9 +100,9 @@ app.run(function ($rootScope, $location, $cookieStore, $http) {
         if (!loggedIn) {
             console.log(restrictedPage);
             if (restrictedPage) {
-                console.log("Navigating to login page:")
+                console.log("Navigating to default page:")
 
-                $location.path('/login');
+                $location.path('/default');
             }
         }
 

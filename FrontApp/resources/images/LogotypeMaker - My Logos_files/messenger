@@ -1,0 +1,48 @@
+(function () {
+  function createInlineIframe () {
+    var frame = document.createElement('iframe')
+    frame.id = 'kayako-messenger-frame'
+    frame.style.border = 'none'
+    frame.style.width = '100%'
+    frame.style.height = '100%'
+    frame.style.minHeight = 'initial'
+    return frame
+  }
+
+  function createMessengerContainer () {
+    var div = document.createElement('div')
+    div.id = 'kayako-messenger'
+    div.style.position = 'fixed'
+    div.style.right = 0
+    div.style.bottom = 0
+    div.style.width = 0
+    div.style.height = 0
+    return div
+  }
+
+  function createScriptTag () {
+    var script = document.createElement('script')
+    script.async = true
+    script.type = 'text/javascript'
+    script.src = 'https://assets.kayako.com/messenger/build-7f58f4218a5f8ea68e94.js'
+    return script
+  }
+
+  if (window.kayako && window.kayako.newEmbedCode) {
+    var messengerContainer = createMessengerContainer()
+    var iframe = createInlineIframe()
+    document.body.appendChild(messengerContainer)
+    messengerContainer.appendChild(iframe)
+
+    iframe.contentWindow.document.open('text/html', 'replace')
+    iframe.contentWindow.document.write('<!DOCTYPE html>')
+    iframe.contentWindow.document.write('<html>')
+    iframe.contentWindow.document.write('<head></head>')
+    iframe.contentWindow.document.write('<body></body>')
+    iframe.contentWindow.document.write('</html>')
+    iframe.contentWindow.document.body.appendChild(createScriptTag())
+    iframe.contentWindow.document.close()
+  } else {
+    document.body.appendChild(createScriptTag())
+  }
+})()

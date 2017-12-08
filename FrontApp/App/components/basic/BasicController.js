@@ -9,6 +9,7 @@ app.controller('BasicController',['$http', '$scope', 'REST_URI','$location', '$r
     $scope.comments = {};
     me.comment = {};
     $scope.currentUser = $cookieStore.get('currentUser');
+    $scope.userImageUrl = REST_URI+'resources/images';
     $http.get(REST_URI + '/get/post').then(
         function (response) {
             console.log('Post fectched sucessfully...!!!');

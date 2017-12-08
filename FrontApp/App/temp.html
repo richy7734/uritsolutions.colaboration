@@ -1,0 +1,93 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavBarController as navCtrl">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="">UrItSolution</a>
+        </div>
+        <!-- Search bar in navbar -->
+        <!--<form id="searchBar" class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" ng-model="navCtrl.name">
+          </div>
+          <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" ng-click="navCtrl.searchFrnds()"></button>
+        </form>-->
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+          <li ng-if="navCtrl.currentUser == null">
+            <a href="" data-toggle="modal" data-target="#loginModal">
+              <i class="glyphicon glyphicon-log-in"></i> Login </a>
+          </li>
+          <li ng-show="navCtrl.currentUser" class='ng-hide'>
+            <a href="">
+              <i class="glyphicon glyphicon-user"></i>
+              <span ng-bind="navCtrl.currentUser.name">
+            </a>
+          </li>
+  
+  
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">User
+              <b class="fa fa-angle-down"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#!/user/">
+                  <i class="fa fa-fw fa-user"></i> My Profile</a>
+              </li>
+              <li class="divider"></li>
+              <li ng-if="navCtrl.currentUser != null">
+                <a href="" ng-click="navCtrl.logout()">
+                  <i class="glyphicon glyphicon-log-out"></i> Logout</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav side-nav">
+            <li>
+              <a href="#!/home/">
+                <span class="glyphicon glyphicon-home"> Home </a>
+            </li>
+            <li ng-if="navCtrl.currentUser == null">
+              <a href="#!/register/">
+                <span class="glyphicon glyphicon-send"> Register </a>
+            </li>
+            <li ng-if="navCtrl.currentUser != null">
+              <a href="#!/post/">
+                <span class="glyphicon glyphicon-share"> Post</a>
+            </li>
+            <li ng-if="navCtrl.currentUser != null">
+              <a href="#!/friends/0">
+                <span class="glyphicon glyphicon-user"> Friends</a>
+            </li>
+            <li ng-if="navCtrl.currentUser != null">
+              <a href="#!/addForum/">
+                <span class="glyphicon glyphicon-education"> Forum</a>
+            </li>
+            <li ng-if="navCtrl.currentUser != null">
+              <a href="#!/jobs/">
+                <span class="glyphicon glyphicon-education"> Jobs</a>
+            </li>
+            <li ng-if="navCtrl.currentUser != null && navCtrl.currentUser.role == 'ROLE_ADMIN'">
+              <a href="#!/admin/">
+                <span class="glyphicon glyphicon-user"> Admin Page</a>
+            </li>
+            <li ng-if="navCtrl.currentUser != null && navCtrl.currentUser.role == 'ROLE_ADMIN'">
+              <a href="#!/postJobs/">
+                <span class="glyphicon glyphicon-share">Post Jobs</a>
+            </li>
+            <li ng-if="navCtrl.currentUser != null && navCtrl.currentUser.role == 'ROLE_ADMIN'">
+              <a href="#!/sample/">
+                <span class="glyphicon glyphicon-share">Sample</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </nav>
+  

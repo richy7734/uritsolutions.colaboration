@@ -21,7 +21,7 @@ public class PostDaoImpl implements PostDao {
 	@SuppressWarnings("unchecked")
 	public List<Post> getPost() {
 		
-		return sessionFactory.getCurrentSession().createQuery("FROM Post WHERE grpId ="+0).list();
+		return sessionFactory.getCurrentSession().createQuery("FROM Post ORDER BY POST_DATE DESC").list();
 	}
 
 	public void addPost(Post post) {

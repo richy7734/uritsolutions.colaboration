@@ -32,7 +32,7 @@ public class Post {
 	private String content;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "POST_DATE",columnDefinition = "TIMESTAMP")
+	@Column(name = "POST_DATE", columnDefinition = "TIMESTAMP")
 	private Date date;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -40,7 +40,7 @@ public class Post {
 
 	private int grpId;
 
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Comment> Comments;
 
 	public int getId() {
@@ -91,7 +91,6 @@ public class Post {
 		Comments = comments;
 	}
 
-
 	public User getUser() {
 		return user;
 	}
@@ -114,6 +113,4 @@ public class Post {
 				+ date + ", user=" + user + ", grpId=" + grpId + ", Comments=" + Comments + "]";
 	}
 
-	
-	
 }
